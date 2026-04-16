@@ -1,5 +1,5 @@
 <template>
-    <UIButton @click="ping">Ping</UIButton>
+    
 </template>
 
 <style scoped>
@@ -16,16 +16,11 @@
                 
             }
         },
-        methods: {
-            async ping() {
-                console.log(await sendPacket())
-            }
-        },
         mounted() {
             
         },
         unmounted() {
             
-        },
+        }
     }
 </script>

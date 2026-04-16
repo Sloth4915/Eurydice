@@ -1,0 +1,27 @@
+Eurydice Table Structure
+
+scouts
+    scout_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    team INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    settings BLOB NOT NULL
+
+teams
+    team_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    team INTEGER NOT NULL,
+    join_code TEXT NOT NULL,
+    admin_password TEXT NOT NULL
+
+events
+    team_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    event TEXT NOT NULL,
+    PRIMARY KEY (team_id, event)
+
+data
+    data_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    team_id TEXT NOT NULL,
+    scout_id TEXT NOT NULL,
+    scouted_team TEXT NOT NULL,
+    scouted_match TEXT,
+    event TEXT NOT NULL,
+    json BLOB NOT NULL
