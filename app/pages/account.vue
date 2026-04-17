@@ -63,7 +63,7 @@
             async create_team() {
                 useCookie("admin_password").value = this.password
                 let packet = await sendPacket(PacketTypes.CREATE_TEAM, {"team": parseInt(this.team)})
-                console.log(packet)
+                console.log(packet.success)
             },
             async login_team() {
                 await sendPacket(PacketTypes.TEST_CREDENTIALS_TEAM)
