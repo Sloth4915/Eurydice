@@ -3,8 +3,8 @@
     <h1 class="cursor" @click="navigateTo('/')">Eurydice</h1>
 
     <div class="f">
-      <UIButton @click="toggleTheme">Theme</UIButton>
-      <UIButton @click="navigateTo('/account')">Login</UIButton>
+      <UIButton class="small" @click="toggleTheme">Theme</UIButton>
+      <UIButton class="small" @click="navigateTo('/account')">Login</UIButton>
     </div>
   </div>
   <NuxtPage/>
@@ -35,7 +35,11 @@
       }
     },
     mounted() {
-      
+      useHead({
+        bodyAttrs: { 
+          class: computed(() => this.$device.isMobileOrTablet ? "mobile" : "")
+        }
+      })
     },
     unmounted() {
       
@@ -44,15 +48,15 @@
       toggleTheme() {
         useColorMode().value = useColorMode().value === "light" ? "dark" : "light"
       },
-      ping() {
-
-      }
     },
     provide() {
       return {
         "account": this.account,
         "forms": this.forms
       }
+    },
+    setup() {
+      
     }
   }
 </script>

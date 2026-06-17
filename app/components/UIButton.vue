@@ -9,9 +9,16 @@
         background-color: var(--primary);
         border: 2px inset var(--outline);
         border-radius: 4px;
+        font-size: 1.2rem;
+        padding: 0.5rem;
     }
 
-    [selected='true'], .selected {
+    button.small {
+        font-size: 0.9rem;
+        padding: 0.2rem;
+    }
+
+    [selected], .selected {
         background-color: var(--secondary);
     }
 </style>

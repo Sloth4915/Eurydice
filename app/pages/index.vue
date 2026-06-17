@@ -18,7 +18,7 @@
         },
         methods: {
             async ping() {
-                console.log(await sendPacket())
+                console.log(await sendPacket(PacketTypes.TBA_REQUEST, {"suburl": "teams/1"}))
             }
         },
         mounted() {

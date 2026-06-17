@@ -7,6 +7,8 @@
     --primary: rgb(238, 239, 244);
     --secondary: rgb(170, 182, 243);
     --outline: rgb(181, 210, 225);
+    
+    --error: rgb(175, 12, 12);
 }
 
 :root.dark {
@@ -16,9 +18,11 @@
 
     --font: rgb(244,244,244);
 
-    --primary: rgb(143, 69, 118);
+    --primary: rgb(104, 64, 131);
     --secondary: rgb(99, 88, 154);
     --outline: rgb(162, 89, 152);
+    
+    --error: rgb(255, 79, 79);
 }
 
 body {
@@ -55,7 +59,7 @@ body {
     gap: 0.5rem;
 }
 .fill-children * {
-    flex-grow: 1;
+flex-grow: 1;
 }
 .between {
     justify-content: space-between;
@@ -76,4 +80,21 @@ body {
 
 .cursor {
     cursor: pointer;
+}
+
+.holder {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.bold, .b {
+    font-weight: bold;
+}
+.italic, .italics, .i {
+    font-style: italic;
 }

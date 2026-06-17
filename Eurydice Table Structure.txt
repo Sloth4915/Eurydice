@@ -1,27 +1,61 @@
-Eurydice Table Structure
-
-scouts
+CREATE TABLE IF NOT EXISTS scouts (
     scout_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    team INTEGER NOT NULL,
+    organization_id INTEGER NOT NULL,
     name TEXT NOT NULL,
-    settings BLOB NOT NULL
+    settings BLOB NOT NULL,
+    token TEXT,
+    session_start INTEGER
+);
 
-teams
-    team_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    team INTEGER NOT NULL,
+CREATE TABLE IF NOT EXISTS organizations (
+    organization_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    team_num INTEGER NOT NULL,
+    email TEXT NOT NULL,
     join_code TEXT NOT NULL,
-    admin_password TEXT NOT NULL
+    admin_password TEXT NOT NULL,
+    token TEXT,
+    session_start INTEGER
+);
 
-events
-    team_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    event TEXT NOT NULL,
-    PRIMARY KEY (team_id, event)
+CREATE TABLE IF NOT EXISTS events (
+    event_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    organization_id INTEGER,
+    event_name TEXT NOT NULL,
+    event_code TEXT NOT NULL,
+    data_format_id INTEGER NOT NULL,
+    teams BLOB,
+    matches BLOB,
+    scout_schedule BLOB
+);
 
-data
+CREATE TABLE IF NOT EXISTS data_format (
+    data_format_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    organization_id INTEGER NOT NULL,
+    name TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS data (
     data_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    team_id TEXT NOT NULL,
+    organization_id TEXT NOT NULL,
     scout_id TEXT NOT NULL,
+    event_id INTEGER NOT NULL,
+    data_format_id INTEGER NOT NULL,
     scouted_team TEXT NOT NULL,
     scouted_match TEXT,
-    event TEXT NOT NULL,
     json BLOB NOT NULL
+);
+
+
+
+
+
+
+
+
+Data Flow:
+Organization is created for a team
+Scouters log in and enter manager mode by typing in manager code.
+
+NEEDS/WANTS:
+Put in event code for match schedule
+Match schedule is brought down from TBA and sent to all the people
