@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
-  modules: ['@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/device'],
+  modules: ['@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/device', 'nuxt-qrcode'],
   css: ["~/assets/global.css"],
   app: {
     head: {
