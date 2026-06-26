@@ -1,16 +1,12 @@
 <template>
     <UIButton @click="qrExport">qr export data</UIButton>
-    <UIButton @click="qrImport">read qr</UIButton>
+    <UIButton @click="qrImport">read qr</UIButton> phase is {{ phase }} <br/>
     <template v-if="phase === 'export'">
-        <FountainCode :data="testingData"/>
+        <FountainCode :data="testingData" :dialog="true" :cancel="() => phase = ''"/>
     </template>
     <template v-else-if="phase === 'import'">
         import {{ data }}
-        <QrcodeStream
-            @error="error"
-            @detect="detect"
-            class="qrStream"
-        />
+        <FountainReader :callback="(a) => {data = a}" :cancel="() => phase = ''"/>
     </template>
 </template>
 
@@ -25,14 +21,6 @@
 </style>
 
 <script>
-    import {
-        parseFramesReducer,
-        areFramesComplete,
-        framesToData,
-        progressOfFrames,
-        currentNumberOfFrames 
-    } from "qrloop";
-    import { Buffer } from "buffer"
     export default {
         props: {
             
@@ -67,18 +55,6 @@ Quisque quis justo vel libero maximus blandit. Donec blandit dui ac libero matti
                 this.qrFrames = null
                 this.phase = 'import'
             },
-            detect(a) {
-                this.qrFrames = parseFramesReducer(this.qrFrames, a[0].rawValue)
-                
-                if (areFramesComplete(this.qrFrames)) {
-                    console.log("scanning done!")
-                    console.log(this.qrFrames)
-                    console.log(framesToData(this.qrFrames).toString())
-                } else try { this.data = currentNumberOfFrames(this.qrFrames)} catch { this.data = "Error. Try again" }
-            },
-            error(a) {
-                console.error(a)
-            }
         }
     }
 </script>

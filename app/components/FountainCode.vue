@@ -1,43 +1,54 @@
 <template>
-    <div class="col c">
+    <component :is="dialog ? 'UIDialog' : 'div'" class="qr-code" :class="{'panel col c': !dialog}" ref="dialog" closeable :onUserClose="cancel">
         <template v-if="data === null">You forgot to pass in data</template>
         <template v-else>
+            <div class="title">Share with QR</div>
             <canvas ref="canvas" width="300" height="300"/>
-            {{ qrIndex }} / {{ qrFrames.length }}
+            {{ qrIndex + 1 }} / {{ qrFrames.length }}
             <div class="f c row"> 
-                <input type="range" min="50" max="500" v-model="rate" @change="setRateInterval"> 
-                <div class="fps-counter"> {{ Math.round(1000/rate) }} fps </div> 
+                <UIInput type="range" min="100" max="666" v-model="rate" @change="setRateInterval"/> 
+                <div class="fps-counter"> {{ Math.round(1000/rate*10)/10 }} fps </div> 
             </div>
         </template>
-    </div>
+    </component>
 </template>
 
 <style scoped>
     .fps-counter {
         width: 60px;
     }
+    div.qr-code {
+        width: min-content;
+    }
 </style>
 
 <script>
     import { dataToFrames } from "qrloop";
     import QRCode from "qrcode";
+    import UIDialog from "./UIDialog.vue";
     export default {
         props: {
-            data: String
+            data: String,
+            dialog: {
+                type: Boolean,
+                default: true,
+            },
+            cancel: Function
         },
         data() {
             return {
                 qrFrames: [],
                 qrIndex: 0,
                 
-                rate: 350,
+                rate: 333,
                 rateInterval: -1
             }
         },
         mounted() {
-            this.qrFrames = dataToFrames(this.data, 130)
+            this.qrFrames = dataToFrames(this.data, 400)
             this.qrIndex = 0
             this.setRateInterval()
+            this.$refs.dialog.show()
         },
         methods: {
             setRateInterval() {
@@ -50,6 +61,7 @@
         },
         unmounted() {
             
-        }
+        },
+        components: { UIDialog }
     }
 </script>
