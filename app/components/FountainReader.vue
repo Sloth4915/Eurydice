@@ -3,10 +3,7 @@
         <template v-if="!done">
             <div class="title">Scan QR Codes</div>
             <div class="streamHolder">
-                <QrcodeStream
-                    @error="error"
-                    @detect="detect"
-                />
+                <video ref="cameraFeed"></video>
             </div>
             <div class="header">{{ Math.round(data * 10000)/100 }}%</div>
             <div class="subscript">If your device's camera is bad, you may need to lower the FPS on the device that is sharing data.</div>
@@ -14,11 +11,19 @@
 
         <template v-else>
             <textarea>{{ data }}</textarea>
+            <UIButton>
+                {{  }}
+            </UIButton>
         </template>
     </UIDialog>
 </template>
 
 <style scoped>
+    video {
+        width: 100%;
+        height: 100%;
+
+    }
     dialog {
         position: absolute;
         top: 0;
@@ -36,12 +41,14 @@
 </style>
 
 <script>
+    import jsQR from "jsqr";
     import {
         parseFramesReducer,
         areFramesComplete,
         framesToData,
         progressOfFrames,
     } from "qrloop";
+
     export default {
         props: {
             callback: Function,
@@ -52,25 +59,49 @@
                 qrFrames: null,
                 done: false,
                 data: null,
+                scanner: null,
+                animationId: null,
             }
         },
         mounted() {
             this.$refs.dialog.show()
+
+            let video = this.$refs.cameraFeed
+            let ctx = this
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+                video.srcObject = stream;
+                video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                video.play();
+                ctx.tick()
+            });
         },
         unmounted() {
-            
+            cancelAnimationFrame(this.animationId)
         },
         methods: {
             detect(a) {
-                this.qrFrames = parseFramesReducer(this.qrFrames, a[0].rawValue)
+                this.qrFrames = parseFramesReducer(this.qrFrames, a.data)
                 if (areFramesComplete(this.qrFrames)) {
                     this.done = true
                     this.data = (framesToData(this.qrFrames).toString())
-                    if (typeof this.callback === "function") this.callback(data)
+                    cancelAnimationFrame(this.animationId)
                 } else this.data = progressOfFrames(this.qrFrames)
             },
-            error(a) {
-                console.error(a)
+            tick() {
+                let video = this.$refs.cameraFeed
+                let ctx = this
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    setTimeout(() => {
+                        let canvas = new OffscreenCanvas(video.videoWidth, video.videoHeight).getContext("2d")
+                        canvas.drawImage(video, 0, 0, video.videoWidth, video.videoHeight)
+                        let img = canvas.getImageData(0,0,1000,1000)
+                        let code = jsQR(img.data, img.width, img.height)
+                        if (code) {
+                            ctx.detect(code)
+                        }
+                    },1)
+                }
+                this.animationId = requestAnimationFrame(this.tick)
             }
         },
     }

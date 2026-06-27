@@ -26,9 +26,10 @@
     import { dataToFrames } from "qrloop";
     import QRCode from "qrcode";
     import UIDialog from "./UIDialog.vue";
+
     export default {
         props: {
-            data: String,
+            data: String || Object,
             dialog: {
                 type: Boolean,
                 default: true,
@@ -45,10 +46,15 @@
             }
         },
         mounted() {
-            this.qrFrames = dataToFrames(this.data, 400)
+            let data = this.data
+            if (typeof data === "object") data = JSON.stringify(data)
+            if (typeof data !== "string") throw new TypeError("FountainCode Component needs type String or Object")
+            // TODO implement compression
+            this.qrFrames = dataToFrames(data, 400)
             this.qrIndex = 0
             this.setRateInterval()
             this.$refs.dialog.show()
+            
         },
         methods: {
             setRateInterval() {
