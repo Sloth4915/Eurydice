@@ -10,10 +10,10 @@
         </template>
 
         <template v-else>
-            <textarea>{{ data }}</textarea>
-            <UIButton>
-                {{  }}
-            </UIButton>
+            <div class="title">Does this look right?</div>
+            <UITextarea :model-value="data" rows="15" cols="50"/>
+            <UIButton @click="() => callback(data)">Confirm</UIButton>
+            <div class="subscript">Click outside this box to cancel</div>
         </template>
     </UIDialog>
 </template>
@@ -48,6 +48,7 @@
         framesToData,
         progressOfFrames,
     } from "qrloop";
+    import LZString from 'lz-string';
 
     export default {
         props: {
@@ -66,24 +67,27 @@
         mounted() {
             this.$refs.dialog.show()
 
-            let video = this.$refs.cameraFeed
-            let ctx = this
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
-                video.srcObject = stream;
-                video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-                video.play();
-                ctx.tick()
-            });
+            this.startScanning()
         },
         unmounted() {
             cancelAnimationFrame(this.animationId)
         },
         methods: {
+            startScanning() {
+                let video = this.$refs.cameraFeed
+                let ctx = this
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+                    video.srcObject = stream;
+                    video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                    video.play();
+                    ctx.tick()
+                });
+            },
             detect(a) {
                 this.qrFrames = parseFramesReducer(this.qrFrames, a.data)
                 if (areFramesComplete(this.qrFrames)) {
                     this.done = true
-                    this.data = (framesToData(this.qrFrames).toString())
+                    this.data = LZString.decompressFromUTF16(framesToData(this.qrFrames).toString())
                     cancelAnimationFrame(this.animationId)
                 } else this.data = progressOfFrames(this.qrFrames)
             },

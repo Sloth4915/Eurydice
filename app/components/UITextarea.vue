@@ -1,9 +1,6 @@
 <template>
     <div class="gap f row cy">
-        <label v-if="typeof label !== 'undefined'" :for="id">
-            {{ label }}
-        </label>
-        <input 
+        <textarea 
             :value="modelValue" 
             @input="$emit('update:modelValue', $event.target.value)" 
             class="custom-input"
@@ -15,25 +12,25 @@
 </template>
 
 <style scoped>
-    input {
+    textarea {
         background-color: var(--primary);
         border: 2px inset var(--outline);
         border-radius: 4px;
         font-size: 1.1rem;
     }
 
-    label {
+    textarea {
         font-size: 1.15rem;
     }
 
-    input::placeholder {
+    textarea::placeholder {
         color: color-mix(in srgb, var(--font), var(--primary));
     }
 </style>
 
 <script>
     export default {
-        props: ["modelValue", "label"],
+        props: ["modelValue"],
         data() {
             return {
                 id: useId()

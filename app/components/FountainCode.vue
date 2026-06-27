@@ -26,6 +26,7 @@
     import { dataToFrames } from "qrloop";
     import QRCode from "qrcode";
     import UIDialog from "./UIDialog.vue";
+    import LZString from 'lz-string';
 
     export default {
         props: {
@@ -49,8 +50,7 @@
             let data = this.data
             if (typeof data === "object") data = JSON.stringify(data)
             if (typeof data !== "string") throw new TypeError("FountainCode Component needs type String or Object")
-            // TODO implement compression
-            this.qrFrames = dataToFrames(data, 400)
+            this.qrFrames = dataToFrames(LZString.compressToUTF16(data), 400)
             this.qrIndex = 0
             this.setRateInterval()
             this.$refs.dialog.show()

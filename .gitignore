@@ -2,6 +2,7 @@
 *.db
 path
 package-lock.json
+*/package-lock.json
 *.db-journal
 
 # Nuxt Recommended .gitignore
