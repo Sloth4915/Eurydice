@@ -4,6 +4,7 @@ path
 package-lock.json
 */package-lock.json
 *.db-journal
+*brainstorming*.txt
 
 # Nuxt Recommended .gitignore
 

@@ -25,7 +25,7 @@
 <script>
     import { dataToFrames } from "qrloop";
     import QRCode from "qrcode";
-    import UIDialog from "./UIDialog.vue";
+    import UIDialog from "./UI/Dialog.vue";
     import LZString from 'lz-string';
 
     export default {

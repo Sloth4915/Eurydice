@@ -1,16 +1,10 @@
 <template>
-    this is a form
+    <slot/>
 </template>
 
 <style scoped>
-    
-</style>
 
-<script setup>
-    definePageMeta({
-        layout: 'no-navigation'
-    })
-</script>
+</style>
 
 <script>
     export default {
@@ -19,9 +13,7 @@
         },
         data() {
             return {
-                form: {
-                    
-                }
+                
             }
         },
         mounted() {
@@ -29,6 +21,9 @@
         },
         unmounted() {
             
-        }
+        },
+        methods: {
+            
+        },
     }
 </script>
