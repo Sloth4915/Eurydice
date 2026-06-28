@@ -1,6 +1,8 @@
-# Nuxt Minimal Starter
+# Eurydice
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Eurydice is the custom scouting app created by FRC Team 4915.
+
+Made with Nuxt
 
 ## Setup
 
@@ -22,7 +24,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start the development server. To start with https, replace `dev` with `httpsdev`
 
 ```bash
 # npm
@@ -71,5 +73,3 @@ yarn preview
 # bun
 bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
