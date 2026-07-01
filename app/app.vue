@@ -29,9 +29,7 @@
       
     },
     methods: {
-      toggleTheme() {
-        useColorMode().value = useColorMode().value === "light" ? "dark" : "light"
-      },
+      
     },
     provide() {
       return {

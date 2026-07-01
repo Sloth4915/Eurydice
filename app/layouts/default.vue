@@ -41,7 +41,9 @@
             
         },
         methods: {
-            
+            toggleTheme() {
+                useColorMode().preference = useColorMode().value === "light" ? "dark" : "light"
+            },
         },
     }
 </script>
