@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxtjs/device',
     '@pinia/nuxt',
+    '@vueuse/nuxt'
   ],
   css: ["~/assets/global.css"],
   app: {
