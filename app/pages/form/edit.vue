@@ -33,6 +33,8 @@
         top: 0;
         left: 0;
         overflow: hidden;
+        outline: 4px solid var(--outline);
+        background-color: var(--bg);
     }
 </style>
 

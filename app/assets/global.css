@@ -89,6 +89,15 @@ body {
 .evenly {
     justify-content: space-evenly;
 }
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+
 /*#endregion Flex*/
 
 /** Full width */

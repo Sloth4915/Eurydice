@@ -1,41 +1,24 @@
 <template>
-    <div :style="styles()" class="f c" @mousedown="beginDrag('x', 'y', false)">
-        <div class="dragPoint br" ref="br" @mousedown.stop="beginDrag('width', 'height', false)"></div>
+    <div :style="styles()" class="f c" @mousedown.prevent.stop="beginDrag('x', 'y', false)">
+        <div class="dragPoint br align-end justify-end" ref="br" @mousedown.prevent.stop="beginDrag('width', 'height', false)"></div>
     </div>
 </template>
 
 <style scoped>
     div {
         position: absolute;
-        background-color: purple;
+        background-color: var(--panel);
     }
     .dragPoint {
         position: absolute;
-        width: 0.5rem;
-        height: 0.5rem;
-        background-color: blue;
+        width: 1rem;
+        height: 1rem;
         cursor: move;
-    }
-    .tl {
-        top: 0;
-        left: 0;
-    }
-    .tr {
-        top: 0;
-        right: 0;
-    }
-    .bl {
-        bottom: 0;
-        left: 0;
-    }
-    .br {
         bottom: 0;
         right: 0;
-    }
-    .mid {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        font-size: 1rem;
+        padding: 0;
+        background: linear-gradient(315deg, var(--font) 0%, var(--font) 50%, transparent 50%, transparent 100%);
     }
 </style>
 
@@ -83,6 +66,11 @@
                 if (this.dragDetails === null) return
                 this[this.dragDetails.xAttr] += (this.mouseX - this.dragDetails.mx) / this.getPhoneWidth() * this.dragDetails.inverted * 100
                 this[this.dragDetails.yAttr] += (this.mouseY - this.dragDetails.my) / this.getPhoneHeight() * this.dragDetails.inverted * 100
+
+                if (this.dragDetails.xAttr === "x") this.x = Math.max(Math.min(100 - this.width, this.x), 0)
+                else if (this.dragDetails.xAttr === "width") this.width = Math.max(Math.min(100 - this.x, this.width), this.snap)
+                if (this.dragDetails.yAttr === "y") this.y = Math.max(Math.min(100 - this.height, this.y), 0)
+                else if (this.dragDetails.yAttr === "height") this.height = Math.max(Math.min(100 - this.y, this.height), this.snap)
 
                 this.dragDetails.mx = this.mouseX
                 this.dragDetails.my = this.mouseY
