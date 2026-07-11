@@ -1,0 +1,58 @@
+Organization (is the admin for a group)
+- JSON Array of event ids
+- JSON Array of additional permissions
+
+User
+- Org id
+- Password
+- Team number
+- Username
+
+Form
+- Org Id
+- Event Id
+- Name
+
+ScoutingSubmission
+- Form Id
+- Data
+- User id
+- Timestamp
+- Position
+
+Event
+- Event code TBA
+- Org id
+- Positions
+- Tag Options
+- Orpheus Mapping
+
+EventAlliance
+- Event id
+- Alliance name
+- Teams
+- Tags
+- Notes
+
+EventMatch
+- Event id
+- Org id
+- Match id
+- JSON Positions & Robots
+- JSON object of assigned scouters
+
+EventTeam
+- Event id
+- Org id
+- Team number
+- Tags
+- Notes
+
+EventTeamImage
+- EventTeam id
+- Image in base64
+
+Chat
+- Organization
+- User Id
+- Timestamp

@@ -1,6 +1,7 @@
 <template>
     <div :style="styles()" class="f c" @mousedown.prevent.stop="beginDrag('x', 'y', false)">
         <div class="dragPoint br align-end justify-end" ref="br" @mousedown.prevent.stop="beginDrag('width', 'height', false)"></div>
+        {{ component.name }}
     </div>
 </template>
 
@@ -13,7 +14,7 @@
         position: absolute;
         width: 1rem;
         height: 1rem;
-        cursor: move;
+        cursor: nwse-resize;
         bottom: 0;
         right: 0;
         font-size: 1rem;
@@ -25,7 +26,7 @@
 <script>
     export default {
         props: {
-            
+            component: Object
         },
         setup() {
             const { x, y } = useMouse({ type: 'client' });
@@ -37,12 +38,7 @@
         },
         data() {
             return {
-                width: 30,
-                height: 20,
-                x: 10,
-                y: 20,
                 dragDetails: null,
-                snap: 5,
             }
         },
         mounted() {
@@ -56,26 +52,27 @@
         methods: {
             styles() {
                 return {
-                    width: Math.round(this.width / this.snap) * this.snap + "%",
-                    height: Math.round(this.height / this.snap) * this.snap + "%",
-                    left: Math.round(this.x / this.snap) * this.snap + "%",
-                    top: Math.round(this.y / this.snap) * this.snap + "%",
+                    width: Math.round(this.component.layouts[this.layout].width / this.snap) * this.snap + "%",
+                    height: Math.round(this.component.layouts[this.layout].height / this.snap) * this.snap + "%",
+                    left: Math.round(this.component.layouts[this.layout].x / this.snap) * this.snap + "%",
+                    top: Math.round(this.component.layouts[this.layout].y / this.snap) * this.snap + "%",
                 }
             },
             mouseMove() {
                 if (this.dragDetails === null) return
-                this[this.dragDetails.xAttr] += (this.mouseX - this.dragDetails.mx) / this.getPhoneWidth() * this.dragDetails.inverted * 100
-                this[this.dragDetails.yAttr] += (this.mouseY - this.dragDetails.my) / this.getPhoneHeight() * this.dragDetails.inverted * 100
+                this.component.layouts[this.layout][this.dragDetails.xAttr] += (this.mouseX - this.dragDetails.mx) / this.getPhoneWidth() * this.dragDetails.inverted * 100
+                this.component.layouts[this.layout][this.dragDetails.yAttr] += (this.mouseY - this.dragDetails.my) / this.getPhoneHeight() * this.dragDetails.inverted * 100
 
-                if (this.dragDetails.xAttr === "x") this.x = Math.max(Math.min(100 - this.width, this.x), 0)
-                else if (this.dragDetails.xAttr === "width") this.width = Math.max(Math.min(100 - this.x, this.width), this.snap)
-                if (this.dragDetails.yAttr === "y") this.y = Math.max(Math.min(100 - this.height, this.y), 0)
-                else if (this.dragDetails.yAttr === "height") this.height = Math.max(Math.min(100 - this.y, this.height), this.snap)
+                if (this.dragDetails.xAttr === "x") this.component.layouts[this.layout].x = Math.max(Math.min(100 - this.component.layouts[this.layout].width, this.component.layouts[this.layout].x), 0)
+                else if (this.dragDetails.xAttr === "width") this.component.layouts[this.layout].width = Math.max(Math.min(100 - this.component.layouts[this.layout].x, this.component.layouts[this.layout].width), this.snap)
+                if (this.dragDetails.yAttr === "y") this.component.layouts[this.layout].y = Math.max(Math.min(100 - this.component.layouts[this.layout].height, this.component.layouts[this.layout].y), 0)
+                else if (this.dragDetails.yAttr === "height") this.component.layouts[this.layout].height = Math.max(Math.min(100 - this.component.layouts[this.layout].y, this.component.layouts[this.layout].height), this.snap)
 
                 this.dragDetails.mx = this.mouseX
                 this.dragDetails.my = this.mouseY
             },
             beginDrag(xAttr, yAttr, inverted) {
+                this.setSelectedComponent(this.component)
                 this.dragDetails = {
                     xAttr,
                     yAttr,
@@ -86,8 +83,14 @@
             },
             endDrag() {
                 this.dragDetails = null
+                this.component.layouts[this.layout] = {
+                    width: Math.round(this.component.layouts[this.layout].width / this.snap) * this.snap,
+                    height: Math.round(this.component.layouts[this.layout].height / this.snap) * this.snap,
+                    x: Math.round(this.component.layouts[this.layout].x / this.snap) * this.snap,
+                    y: Math.round(this.component.layouts[this.layout].y / this.snap) * this.snap,
+                }
             }
         },
-        inject: ["getPhoneWidth", "getPhoneHeight"]
+        inject: ["getPhoneWidth", "getPhoneHeight", "snap", "setSelectedComponent", "setComponent", "layout"]
     }
 </script>

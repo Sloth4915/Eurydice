@@ -1,0 +1,65 @@
+Form
+{
+    name: ""
+
+    fields: []                          
+    components: []                      
+
+    timed: true/false           
+    timedFields: []                     
+
+    layouts: {}
+}
+
+Field
+{
+    name: ""                    Identifier
+    type: string/integer/decimal/boolean/tags/images
+    value:
+    default:
+
+    options:                    For tags
+}
+
+TimedField
+
+Action
+[]
+
+Component
+{
+    uuid exists just for editing purposes
+    name:
+    type:
+    value: expression/field                     Expression if display only, otherwise its connected to a field
+    showIf: expression
+    layouts: {
+        portrait: {x,y,z,width,height}          As percentages
+        landscape: {x,y,z,width,height}         As percentages
+    }
+    type: 
+        Label                                   (can be image/text)
+            img
+            txt
+        Button
+            onTap
+            onDown
+            onUp
+        Dropdown/TagToggle                      (tags)
+            onChange
+        ShortText/LongText/NumberInput
+            onChange
+        FormPage
+            components
+        Photo
+            allowMultiple
+        Draw                                    (draw on field, like for auto routines)
+            backgroundImage                     can be expression (like for positions)
+}
+
+Expression Examples
+[["var", "a", "=", "const", "5"], "and", true]
+
+
+Expression Constants
+Alliance

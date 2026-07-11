@@ -9,8 +9,8 @@
         background-color: var(--primary);
         border: 2px inset var(--outline);
         border-radius: 4px;
-        font-size: 1.2rem;
-        padding: 0.5rem;
+        font-size: 1rem;
+        padding: 0 1rem;
     }
 
     button.small {

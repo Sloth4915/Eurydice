@@ -82,6 +82,10 @@ body {
     flex-grow: 1;
 }
 
+.fill, .flex-fill, .grow, .flex-grow {
+    flex-grow: 1;
+}
+
 .between {
     justify-content: space-between;
 }

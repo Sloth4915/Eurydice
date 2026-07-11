@@ -1,0 +1,26 @@
+Tiered Permission Structure (access to forms, management features, etc):
+- Admin (Required)
+- Default (Required)
+
+Form Types:
+- Match
+- Team
+
+Features:
+- Chat
+
+
+
+
+
+Match Scouting Types:
+- Scouting alliances as a single unit (used for playoffs)
+- Scouting any number of robots in a match, defined by the user
+    - Blue 1, Blue 2, Red 1
+    - Red 1, Red 2, Red 3,
+    - Blue 1, Red 1,
+    - etc
+- Scouting just one robot
+    - Blue 1, Red 2, etc
+
+Pit scouting

@@ -35,7 +35,7 @@
             }
         },
         mounted() {
-            
+            // TODO replace buttons with NuxtLinks
         },
         unmounted() {
             
