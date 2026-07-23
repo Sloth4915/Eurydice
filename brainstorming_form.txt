@@ -14,7 +14,7 @@ Form
 Field
 {
     name: ""                    Identifier
-    type: string/integer/decimal/boolean/tags/images
+    type: str/int/dec/bool/tags/imgs
     value:
     default:
 

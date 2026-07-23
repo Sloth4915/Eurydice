@@ -3,9 +3,15 @@
         <div class="f col gap">
             <div class="panel edit-panel general">
                 <div class='header cy'>Form Settings</div>
+                <UIInput title="Form Name" v-model="name" placeholder="Form Name"/>
+                Placeholder for layout select
             </div>
             <div class="panel edit-panel list">
                 <div class='header cy'>Fields</div>
+                <UIButton @click="addField">Add Field</UIButton>
+                <template v-for="field of fields">
+                    <FormEditorListedField :field="field"/>
+                </template>
             </div>
         </div>
 
@@ -157,8 +163,10 @@
                             height: 10,
                         }
                     },
-                    id: uuidv4()
+                    id: uuidv4(),
+                    selected: true,
                 })
+                if (this.selectedComponent !== null) this.selectedComponent.selected = false
                 this.selectedComponent = this.components[this.components.length-1]
             },
             getComponent(id, container = this.components) {
@@ -180,6 +188,10 @@
                     }
                 }
                 return null
+            },
+
+            addField() {
+                
             }
         },
         provide() {
@@ -187,9 +199,13 @@
                 getPhoneWidth: () => (this.$refs.phone.offsetWidth),
                 getPhoneHeight: () => (this.$refs.phone.offsetHeight),
                 snap: this.snap,
-                selectedComponent: this.selectedComponent,
+                selectedComponent: () => (this.selectedComponent),
                 layout: this.layout,
-                setSelectedComponent: (to) => this.selectedComponent = to,
+                setSelectedComponent: (to) => {
+                    if (this.selectedComponent !== null) this.selectedComponent.selected = false
+                    this.selectedComponent = to
+                    to.selected = true
+                },
                 setComponent: (id,to) => {
                     let a = this.getComponent(id)
                     a = to

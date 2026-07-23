@@ -1,22 +1,19 @@
 <template>
     <div class="f cy component-container">
         <div class="nesting-indicator"/>
-        <UIButton class="edit-button" title="Edit" :class="{selected: component.selected}" @click="setSelectedComponent(component)">✎</UIButton>
         <div class="move-component-buttons f col">
             <UIButton>▲</UIButton>
             <UIButton>▼</UIButton>
         </div>
-        <UIDropdown v-model="component.type">
-            <option value="page">Page</option>
-            <option value="label">Label</option>
-            <option value="button">Button</option>
-            <option value="dropdown">Dropdown</option>
-            <option value="shortText">Short Text Input</option>
-            <option value="longText">Multiline Text Input</option>
-            <option value="photo">Photo</option>
-            <option value="draw">Draw</option>
+        <UIDropdown v-model="field.type">
+            <option value="str">String</option>
+            <option value="int">Integer</option>
+            <option value="dec">Decimal</option>
+            <option value="bool">Boolean</option>
+            <option value="tags">Tags</option>
+            <option value="imgs">Images</option>
         </UIDropdown>
-        <UIInput v-model="component.name"/>
+        <UIInput v-model="field.name"/>
     </div>
 </template>
 
@@ -24,10 +21,6 @@
     .move-component-buttons button {
         font-size: 0.5rem;
         padding: 0 0.5rem;
-    }
-    .component-container .edit-button {
-        padding-left: 0;
-        padding-right: 0;
     }
     select {
         width: 100px;
@@ -50,7 +43,7 @@
 <script>
     export default {
         props: {
-            component: Object
+            field: Object
         },
         data() {
             return {
@@ -66,6 +59,5 @@
         methods: {
             
         },
-        inject: ["setSelectedComponent", "setComponent", "layout"]
     }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div :style="styles()" class="f c" @mousedown.prevent.stop="beginDrag('x', 'y', false)">
+    <div :style="styles()" class="f c" :class="{selected: component.selected}" @mousedown.prevent.stop="beginDrag('x', 'y', false)">
         <div class="dragPoint br align-end justify-end" ref="br" @mousedown.prevent.stop="beginDrag('width', 'height', false)"></div>
         {{ component.name }}
     </div>
@@ -9,6 +9,9 @@
     div {
         position: absolute;
         background-color: var(--panel);
+    }
+    div.selected {
+        border: 1px solid var(--outline);
     }
     .dragPoint {
         position: absolute;
