@@ -1,10 +1,6 @@
 <template>
     <div class="f cy component-container">
-        <div class="nesting-indicator"/>
-        <div class="move-component-buttons f col">
-            <UIButton>▲</UIButton>
-            <UIButton>▼</UIButton>
-        </div>
+        <UIButton class="edit-button" title="Edit" @click="this.open = !this.open">✎</UIButton>
         <UIDropdown v-model="field.type">
             <option value="str">String</option>
             <option value="int">Integer</option>
@@ -47,7 +43,7 @@
         },
         data() {
             return {
-                
+                open: false,
             }
         },
         mounted() {

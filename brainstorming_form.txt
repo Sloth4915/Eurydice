@@ -37,6 +37,7 @@ Component
         portrait: {x,y,z,width,height}          As percentages
         landscape: {x,y,z,width,height}         As percentages
     }
+    locked: expression                          Let users change value
     type: 
         Label                                   (can be image/text)
             img

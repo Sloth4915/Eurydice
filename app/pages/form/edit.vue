@@ -7,8 +7,10 @@
                 Placeholder for layout select
             </div>
             <div class="panel edit-panel list">
-                <div class='header cy'>Fields</div>
-                <UIButton @click="addField">Add Field</UIButton>
+                <div class='header cy between'>
+                    Fields
+                    <UIButton @click="addField">Add Field</UIButton>
+                </div>
                 <template v-for="field of fields">
                     <FormEditorListedField :field="field"/>
                 </template>
@@ -17,8 +19,10 @@
 
         <div class="f col gap">
             <div class="panel edit-panel list">
-                <div class='header cy'>Form Components</div>
-                <UIButton @click="addComponent">Add Component</UIButton>
+                <div class="row header cy between">
+                    Form Components
+                    <UIButton @click="addComponent">Add Component</UIButton>
+                </div>
                 <template v-for="component of components">
                     <FormEditorListedComponent :component="component"/>
                 </template>
@@ -85,10 +89,10 @@
         overflow: hidden;
     }
     .edit-panel.general {
-        height: 20vh;
+        height: 30vh;
     }
     .edit-panel.list {
-        height: 60vh;
+        height: 57vh;
         overflow-y: auto;
     }
     .edit-panel .header {
@@ -139,7 +143,7 @@
                 selectedComponent: null,
 
                 layout: "portrait",
-                snap: 2,
+                snap: 1,
             }
         },
         mounted() {
@@ -191,7 +195,13 @@
             },
 
             addField() {
-                
+                this.fields.push({
+                    name: "Unnamed Field",
+                    type: "str",
+                    value: "",
+                    default: "",
+                    options: ""
+                })
             }
         },
         provide() {
