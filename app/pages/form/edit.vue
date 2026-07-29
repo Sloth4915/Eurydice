@@ -83,6 +83,13 @@
     </div>
 </template>
 
+<style>
+    .component-position input {
+        width: 50px !important; 
+        max-width: 50px !important;
+    }
+</style>
+
 <style scoped>
     .edit-panel {
         width: 30vw;
@@ -115,11 +122,6 @@
         overflow: hidden;
         outline: 4px solid var(--outline);
         background-color: var(--bg);
-    }
-
-    .component-position input {
-        width: 30px;
-        max-width: 30px;
     }
 </style>
 

@@ -15,10 +15,25 @@ Field
 {
     name: ""                    Identifier
     type: str/int/dec/bool/tags/imgs
+        str                     String
+            maxLength           
+        int                     Integer
+            min                 Null if no min
+            max                 Null if no max
+            step
+        dec                     Decimal/Float
+            min
+            max
+            step
+            roundDigits
+        bool                    Boolean
+        tags
+            options
+            allowMultiple       true/false for multi select
+        imgs
+            allowMultiple
     value:
     default:
-
-    options:                    For tags
 }
 
 TimedField
