@@ -15,6 +15,7 @@
     "@nuxtjs/device": "^4.0.0",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@pinia/nuxt": "^0.11.3",
+    "@vite-pwa/nuxt": "^1.1.1",
     "@vueuse/nuxt": "^14.3.0",
     "bcryptjs": "^3.0.3",
     "buffer": "^6.0.3",
@@ -22,15 +23,12 @@
     "lowdb": "^7.0.1",
     "lz-string": "^1.5.0",
     "md5": "^2.3.0",
-    "nuxt": "^4.4.8",
+    "nuxt": "^4.5.1",
     "pinia": "^3.0.4",
     "qrcode": "^1.5.4",
     "qrloop": "^1.4.1",
     "uuid": "^14.0.1",
     "vue": "^3.5.32",
     "vue-router": "^5.0.4"
-  },
-  "devDependencies": {
-    "@nuxtjs/pwa": "^3.3.5"
   }
 }
