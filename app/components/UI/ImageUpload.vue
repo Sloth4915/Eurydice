@@ -1,9 +1,10 @@
 <template>
     <UIButton @click="upload">Upload {{ allowMultiple ? "Image(s)" : "Image"}}</UIButton>
-    <template v-if="allowMultiple" v-for="img in value">
+    <template v-if="allowMultiple && value !== null && (Array.isArray(value) ? value.length > 0 : true)" v-for="img in value">
         <img :src="img">
     </template>
-    <img v-else :src="value">
+    <img v-else-if="value !== null" :src="value">
+    <UIButton v-if="deletable && allowMultiple ? (value !== null && (Array.isArray(value) ? value.length > 0 : true)) : value !== null" @click="$emit('update:modelValue', null)">Remove</UIButton>
 </template>
 
 <style scoped>

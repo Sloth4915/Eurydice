@@ -13,6 +13,7 @@
             <option value="dropdown">Dropdown</option>
             <option value="shortText">Short Text Input</option>
             <option value="longText">Multiline Text Input</option>
+            <option value="number">Number Input</option>
             <option value="photo">Photo</option>
             <option value="draw">Draw</option>
         </UIDropdown>

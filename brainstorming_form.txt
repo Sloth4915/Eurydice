@@ -71,7 +71,6 @@ Component
             labelText
         FormPage
             components
-            labelText
         Photo
             labelText
         Draw                                    (draw on field, like for auto routines)
@@ -84,6 +83,14 @@ Component
 
 Expression Examples
 [["var", "a", "=", "const", "5"], "and", true]
+
+Expression Things:
+X Add X
+X Subtract X
+X Multiply X 
+X Divide X
+X String Combine X
+
 
 
 Expression Constants

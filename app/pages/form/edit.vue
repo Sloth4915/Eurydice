@@ -28,9 +28,9 @@
                 </template>
             </div>
             <div class="panel edit-panel general">
-                <div class='header cy'>Component Settings</div>
                 <FormEditorComponentSettings v-if="selectedComponent !== null" :component="selectedComponent"/>
                 <template v-else>
+                    <div class='header cy'>Component Settings</div>
                     Select a component
                 </template>
             </div>
@@ -120,7 +120,7 @@
                     name: "Untitled Component",
                     type: "label",
                     value: "",
-                    showIf: true,
+                    showIf: [["var", "a", "=", "const", "5"], "and", true],
                     layouts: {
                         portrait: {
                             x: 10,
@@ -138,10 +138,10 @@
 
                     labelText: "Label",
                     image: null,
-                    onTap: null,
-                    onDown: null,
-                    onUp: null,
-                    onChange: null,
+                    onTap: [],
+                    onDown: [],
+                    onUp: [],
+                    onChange: [],
                     components: null,
                 })
                 if (this.selectedComponent !== null) this.selectedComponent.selected = false
