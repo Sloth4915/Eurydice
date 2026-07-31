@@ -14,6 +14,7 @@
     --gray: rgb(116, 116, 116);
     --pink: rgb(246, 152, 255);
     --brown: rgb(116, 82, 50);
+    --transparent: transparent;
 }
 
 :root.light {

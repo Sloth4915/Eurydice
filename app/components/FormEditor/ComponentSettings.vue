@@ -73,6 +73,7 @@
                 <option value="gray">Gray</option>
                 <option value="pink">Pink</option>
                 <option value="brown">Brown</option>
+                <option value="transparent">Transparent</option>
             </optgroup>
         </UIDropdown>
         <UIDropdown label="BG" title="Background Color" v-model="component.bgColor">
@@ -98,6 +99,7 @@
                 <option value="gray">Gray</option>
                 <option value="pink">Pink</option>
                 <option value="brown">Brown</option>
+                <option value="transparent">Transparent</option>
             </optgroup>
         </UIDropdown>
     </div>
