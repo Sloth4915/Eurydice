@@ -55,22 +55,28 @@ Component
     locked: expression                          Let users change value
     type: 
         Label                                   (can be image/text)
-            img
-            txt
+            image
+            labelText
         Button
             onTap
             onDown
             onUp
+            image
+            labelText
         Dropdown/TagToggle                      (tags)
             onChange
+            labelText
         ShortText/LongText/NumberInput
             onChange
+            labelText
         FormPage
             components
+            labelText
         Photo
-            allowMultiple
+            labelText
         Draw                                    (draw on field, like for auto routines)
-            backgroundImage                     can be expression (like for positions)
+            image                               Background image - can be expression (like for positions)
+            labelText
 }
 
 Expression Examples

@@ -1,17 +1,24 @@
 <template>
-    <div :style="styles()" class="f c" :class="{selected: component.selected}" @mousedown.prevent.stop="beginDrag('x', 'y', false)">
+    <div :style="styles()" class="component f c" :class="{selected: component.selected}" @mousedown.prevent.stop="beginDrag('x', 'y', false)">
         <div class="dragPoint br align-end justify-end" ref="br" @mousedown.prevent.stop="beginDrag('width', 'height', false)"></div>
-        {{ component.name }}
+        <template v-if="component.type === 'label'">
+            <img v-if="component.image !== null" :src="component.image">
+            <div class="content">{{ component.labelText }}</div>
+        </template>
+        <template v-else>
+            a {{ component.type }} called "{{ component.name }}"
+        </template>
     </div>
 </template>
 
 <style scoped>
-    div {
+    div.component {
         position: absolute;
         background-color: var(--panel);
+        overflow: hidden;
     }
-    div.selected {
-        border: 1px solid var(--outline);
+    div.component.selected {
+        border: 4px solid var(--outline);
     }
     .dragPoint {
         position: absolute;
@@ -23,6 +30,15 @@
         font-size: 1rem;
         padding: 0;
         background: linear-gradient(315deg, var(--font) 0%, var(--font) 50%, transparent 50%, transparent 100%);
+        z-index: 1000;
+    }
+    img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    .content {
+        z-index: 0;
     }
 </style>
 

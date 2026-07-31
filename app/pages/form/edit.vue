@@ -29,46 +29,7 @@
             </div>
             <div class="panel edit-panel general">
                 <div class='header cy'>Component Settings</div>
-                <template v-if="selectedComponent !== null">
-                    <div class="component-position f gap between">
-                        <div class="f gap">
-                            <UIInput title="Component x as a percent of whole" 
-                                     label="X" 
-                                     type="number" 
-                                     v-model="selectedComponent.layouts[this.layout].x" 
-                                     :step="snap" 
-                                     min="0"
-                                     :max="100-selectedComponent.layouts[this.layout].width"
-                                     />
-                            <UIInput title="Component y as a percent of whole" 
-                                     label="Y" 
-                                     type="number" 
-                                     v-model="selectedComponent.layouts[this.layout].y" 
-                                     :step="snap" 
-                                     min="0"
-                                     :max="100-selectedComponent.layouts[this.layout].height"
-                                     />
-                        </div>
-                        <div class="f gap">
-                            <UIInput title="Component width as a percent of whole" 
-                                     label="W" 
-                                     type="number" 
-                                     v-model="selectedComponent.layouts[this.layout].width" 
-                                     :step="snap" 
-                                     :min="snap"
-                                     :max="100-selectedComponent.layouts[this.layout].x"
-                                     />
-                            <UIInput title="Component height as a percent of whole" 
-                                     label="H" 
-                                     type="number" 
-                                     v-model="selectedComponent.layouts[this.layout].height" 
-                                     :step="snap" 
-                                     :min="snap"
-                                     :max="100-selectedComponent.layouts[this.layout].y"
-                                     />
-                        </div>
-                    </div>
-                </template>
+                <FormEditorComponentSettings v-if="selectedComponent !== null" :component="selectedComponent"/>
                 <template v-else>
                     Select a component
                 </template>
@@ -84,10 +45,7 @@
 </template>
 
 <style>
-    .component-position input {
-        width: 50px !important; 
-        max-width: 50px !important;
-    }
+
 </style>
 
 <style scoped>
@@ -146,6 +104,8 @@
 
                 layout: "portrait",
                 snap: 1,
+
+                fieldId: 0,
             }
         },
         mounted() {
@@ -171,6 +131,14 @@
                     },
                     id: uuidv4(),
                     selected: true,
+
+                    labelText: "Label",
+                    image: null,
+                    onTap: null,
+                    onDown: null,
+                    onUp: null,
+                    onChange: null,
+                    components: null,
                 })
                 if (this.selectedComponent !== null) this.selectedComponent.selected = false
                 this.selectedComponent = this.components[this.components.length-1]
@@ -202,7 +170,9 @@
                     type: "str",
                     value: "",
                     default: "",
-                    options: ""
+                    options: "",
+                    visualId: ((this.fieldId++)+"").padStart(3, "0"),
+                    id: uuidv4()
                 })
             }
         },
