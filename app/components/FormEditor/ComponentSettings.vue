@@ -37,6 +37,70 @@
                         />
         </div>
     </div>
+    <div class="component-position f gap between">
+        <UIDropdown label="🗚" title="Font Size Character" v-model="component.fontSize">
+            <option value="0.5">Microscopic</option>
+            <option value="0.8">Tiny</option>
+            <option value="0.9">Small</option>
+            <option value="1">Normal</option>
+            <option value="1.3">Big</option>
+            <option value="1.5">Bigger</option>
+            <option value="2">Large</option>
+            <option value="2.5">Huge</option>
+            <option value="3">Massive</option>
+            <option value="4">Elephant</option>
+        </UIDropdown>
+        <UIDropdown label="Font" title="Font Color" v-model="component.fontColor">
+            <optgroup label="Eurydice">
+                <option value="panel">BG Default</option>
+                <option value="font">Font Default</option>
+                <option value="primary">Theme Primary</option>
+                <option value="secondary">Theme Secondary</option>
+                <option value="outline">Theme Outline</option>
+            </optgroup>
+            <optgroup label="Colors">
+                <option value="red">Red</option>
+                <option value="orange">Orange</option>
+                <option value="yellow">Yellow</option>
+                <option value="green">Green</option>
+                <option value="cyan">Cyan</option>
+                <option value="blue">Blue</option>
+                <option value="magenta">Magenta</option>
+                <option value="purple">Purple</option>
+                <option value="lilac">Lilac</option>
+                <option value="white">White</option>
+                <option value="black">Black</option>
+                <option value="gray">Gray</option>
+                <option value="pink">Pink</option>
+                <option value="brown">Brown</option>
+            </optgroup>
+        </UIDropdown>
+        <UIDropdown label="BG" title="Background Color" v-model="component.bgColor">
+            <optgroup label="Eurydice">
+                <option value="panel">BG Default</option>
+                <option value="font">Font Default</option>
+                <option value="primary">Theme Primary</option>
+                <option value="secondary">Theme Secondary</option>
+                <option value="outline">Theme Outline</option>
+            </optgroup>
+            <optgroup label="Colors">
+                <option value="red">Red</option>
+                <option value="orange">Orange</option>
+                <option value="yellow">Yellow</option>
+                <option value="green">Green</option>
+                <option value="cyan">Cyan</option>
+                <option value="blue">Blue</option>
+                <option value="magenta">Magenta</option>
+                <option value="purple">Purple</option>
+                <option value="lilac">Lilac</option>
+                <option value="white">White</option>
+                <option value="black">Black</option>
+                <option value="gray">Gray</option>
+                <option value="pink">Pink</option>
+                <option value="brown">Brown</option>
+            </optgroup>
+        </UIDropdown>
+    </div>
     <template v-if="component.type === 'label'">
         <UIInput v-model="component.labelText" label="Label Text"/>
         <UIImageUpload :allowMultiple="false" v-model="component.image" :deletable="true"/>

@@ -3,7 +3,7 @@
         <div class="dragPoint br align-end justify-end" ref="br" @mousedown.prevent.stop="beginDrag('width', 'height', false)"></div>
         <template v-if="component.type === 'label'">
             <img v-if="component.image !== null" :src="component.image">
-            <div class="content">{{ component.labelText }}</div>
+            <div class="content f c">{{ component.labelText }}</div>
         </template>
         <template v-else>
             a {{ component.type }} called "{{ component.name }}"
@@ -14,7 +14,6 @@
 <style scoped>
     div.component {
         position: absolute;
-        background-color: var(--panel);
         overflow: hidden;
     }
     div.component.selected {
@@ -39,6 +38,8 @@
     }
     .content {
         z-index: 0;
+        line-break: normal;
+        color: inherit;
     }
 </style>
 
@@ -75,6 +76,9 @@
                     height: Math.round(this.component.layouts[this.layout].height / this.snap) * this.snap + "%",
                     left: Math.round(this.component.layouts[this.layout].x / this.snap) * this.snap + "%",
                     top: Math.round(this.component.layouts[this.layout].y / this.snap) * this.snap + "%",
+                    "background-color": "var(--"+this.component.bgColor+")",
+                    "font-size": this.component.fontSize + "rem",
+                    "color": "var(--"+this.component.fontColor+")",
                 }
             },
             mouseMove() {

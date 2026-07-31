@@ -1,4 +1,21 @@
 /*#region Themes*/
+:root {
+    --red: rgb(245, 39, 39);
+    --orange: rgb(240, 172, 46);
+    --yellow: rgb(243, 247, 58);
+    --green: rgb(104, 221, 36);
+    --cyan: rgb(37, 190, 183);
+    --blue: rgb(0, 26, 255);
+    --magenta: rgb(217, 41, 240);
+    --purple: rgb(108, 21, 167);
+    --lilac: rgb(174, 117, 240);
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+    --gray: rgb(116, 116, 116);
+    --pink: rgb(246, 152, 255);
+    --brown: rgb(116, 82, 50);
+}
+
 :root.light {
     background-color: rgb(248, 253, 255);
     --font: rgb(8, 8, 8);
@@ -18,15 +35,16 @@
 
     --panel: rgb(22, 21, 24);
 
-    --font: rgb(244,244,244);
+    --font: rgb(244, 244, 244);
 
     --primary: rgb(104, 64, 131);
     --secondary: rgb(99, 88, 154);
     --outline: rgb(162, 89, 152);
-    
+
     --warn: rgb(255, 243, 79);
     --error: rgb(255, 79, 79);
 }
+
 /*#endregion Themes*/
 
 /*#region Global/Body Styles*/
@@ -39,6 +57,7 @@ body {
     font-family: "Raleway";
     box-sizing: border-box;
 }
+
 /*#endregion Basic Global Styles*/
 
 .holder {
@@ -60,16 +79,28 @@ body {
 
 /*#region Quick Attributes*/
 /*#region Flex*/
-.f, .c, .cx, .cy, .col, .gap, .fill-children, .between, .evenly {
+.f,
+.c,
+.cx,
+.cy,
+.col,
+.gap,
+.fill-children,
+.between,
+.evenly {
     display: flex;
 }
 
-.c, .cx {
+.c,
+.cx {
     justify-content: center;
+    text-align: center;
 }
 
-.c, .cy {
+.c,
+.cy {
     align-items: center;
+    text-align: center;
 }
 
 .col {
@@ -84,7 +115,10 @@ body {
     flex-grow: 1;
 }
 
-.fill, .flex-fill, .grow, .flex-grow {
+.fill,
+.flex-fill,
+.grow,
+.flex-grow {
     flex-grow: 1;
 }
 
@@ -121,17 +155,22 @@ body {
 }
 
 /*#region Quick Text Styling*/
-.bold, .b {
+.bold,
+.b {
     font-weight: bold;
 }
 
-.italic, .italics, .i {
+.italic,
+.italics,
+.i {
     font-style: italic;
 }
 
-.u, .underline {
+.u,
+.underline {
     text-decoration: underline;
 }
+
 /*#endregion Quick Text Styling*/
 
 /*#region Headers */
@@ -140,9 +179,11 @@ body {
     font-weight: bolder;
     font-size: 2rem;
 }
+
 .header {
     font-size: 1.5rem;
 }
+
 .subscript {
     font-size: 0.8rem;
     opacity: 0.8;
@@ -153,10 +194,9 @@ body {
 .warn {
     color: var(--warn);
 }
+
 .error {
     color: var(--error);
 }
 
 /*#endregion Quick Attributes*/
-
-

@@ -132,6 +132,10 @@
                     id: uuidv4(),
                     selected: true,
 
+                    fontSize: 1,
+                    fontColor: "font",
+                    bgColor: "panel",
+
                     labelText: "Label",
                     image: null,
                     onTap: null,

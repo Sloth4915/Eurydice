@@ -77,6 +77,9 @@ Component
         Draw                                    (draw on field, like for auto routines)
             image                               Background image - can be expression (like for positions)
             labelText
+    fontSize: options are in code in ComponentSettings.vue
+    fontColor: options are in code in ComponentSettings.vue
+    bgColor: options are in code in ComponentSettings.vue
 }
 
 Expression Examples
