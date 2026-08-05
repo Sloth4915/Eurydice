@@ -3,8 +3,8 @@
         <div class="nesting-indicator"/>
         <UIButton class="edit-button" title="Edit" :class="{selected: component.selected}" @click="setSelectedComponent(component)">✎</UIButton>
         <div class="move-component-buttons f col">
-            <UIButton>▲</UIButton>
-            <UIButton>▼</UIButton>
+            <UIButton :disabled="index === 0" @click="moveUp">▲</UIButton>
+            <UIButton :disabled="index === getComponentContainer(component) - 1" @click="moveDown">▼</UIButton>
         </div>
         <UIDropdown v-model="component.type">
             <option value="page">Page</option>
@@ -51,7 +51,8 @@
 <script>
     export default {
         props: {
-            component: Object
+            component: Object,
+            index: Number,
         },
         data() {
             return {
@@ -65,8 +66,13 @@
             
         },
         methods: {
-            
+            moveUp() {
+                console.log(this.getComponentContainer(this.component.id))
+            },
+            moveDown() {
+
+            }
         },
-        inject: ["setSelectedComponent", "setComponent", "layout"]
+        inject: ["setSelectedComponent", "setComponent", "layout", "getComponentContainer"]
     }
 </script>

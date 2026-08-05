@@ -21,7 +21,7 @@
             <div class="panel edit-panel list">
                 <div class="row header cy between">
                     Form Components
-                    <UIButton @click="addComponent">Add Component</UIButton>
+                    <UIButton @click="addComponent()">Add Component</UIButton>
                 </div>
                 <template v-for="component of components">
                     <FormEditorListedComponent :component="component"/>
@@ -37,8 +37,8 @@
         </div>
 
         <div class="phone panel" ref="phone">
-            <template v-for="component of components">
-                <FormEditorComponent :component="component"/>
+            <template v-for="(component, index) in components">
+                <FormEditorComponent :component="component" :index="index"/>
             </template>
         </div>
     </div>
@@ -115,8 +115,9 @@
             
         },
         methods: {
-            addComponent() {
-                this.components.push({
+            addComponent(to = this.components) {
+                console.log("adding", to)
+                to.push({
                     name: "Untitled Component",
                     type: "label",
                     value: "",
@@ -145,13 +146,13 @@
                     components: null,
                 })
                 if (this.selectedComponent !== null) this.selectedComponent.selected = false
-                this.selectedComponent = this.components[this.components.length-1]
+                this.selectedComponent = to[this.components.length-1]
             },
             getComponent(id, container = this.components) {
                 for (let comp of container) {
                     if (comp.id === id) return comp
                     else if (comp.type === "page") {
-                        let result = this.getComponent(id, comp)
+                        let result = this.getComponent(id, comp.components)
                         if (result !== null) return result
                     }
                 }
@@ -161,8 +162,8 @@
                 for (let comp of container) {
                     if (comp.id === id) return container
                     else if (comp.type === "page") {
-                        let result = this.getComponent(id, comp)
-                        if (result !== null) return comp
+                        let result = this.getComponent(id, comp.components)
+                        if (result !== null) return comp.components
                     }
                 }
                 return null
@@ -196,6 +197,8 @@
                     let a = this.getComponent(id)
                     a = to
                 },
+                getComponentContainer: this.getComponentContainer,
+                addComponent: this.addComponent
             }
         }
     }

@@ -21,6 +21,10 @@
     [selected], .selected {
         background-color: var(--secondary);
     }
+
+    button.nopadding {
+        padding: 0;
+    }
 </style>
 
 <script>
