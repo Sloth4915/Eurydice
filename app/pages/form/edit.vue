@@ -21,10 +21,10 @@
             <div class="panel edit-panel list">
                 <div class="row header cy between">
                     Form Components
-                    <UIButton @click="addComponent()">Add Component</UIButton>
+                    <UIButton @click="addComponent()">+</UIButton>
                 </div>
-                <template v-for="component of components">
-                    <FormEditorListedComponent :component="component"/>
+                <template v-for="(component, index) of components">
+                    <FormEditorListedComponent :container="this" :component="component" :index="index"/>
                 </template>
             </div>
             <div class="panel edit-panel general">
@@ -131,7 +131,7 @@
                         }
                     },
                     id: uuidv4(),
-                    selected: true,
+                    selected: false,
 
                     fontSize: 1,
                     fontColor: "font",
@@ -143,30 +143,38 @@
                     onDown: [],
                     onUp: [],
                     onChange: [],
-                    components: null,
+                    components: [],
                 })
-                if (this.selectedComponent !== null) this.selectedComponent.selected = false
-                this.selectedComponent = to[this.components.length-1]
+                this.setSelectedComponent(to[to.length-1]) 
             },
-            getComponent(id, container = this.components) {
-                for (let comp of container) {
+            getComponent(id, container = this) {
+                console.log(id, container)
+                for (let comp of container.components) {
                     if (comp.id === id) return comp
                     else if (comp.type === "page") {
-                        let result = this.getComponent(id, comp.components)
+                        let result = this.getComponent(id, comp)
                         if (result !== null) return result
                     }
                 }
                 return null
             },
-            getComponentContainer(id, container = this.components) {
-                for (let comp of container) {
+            getComponentContainer(id, container = this) {
+                for (let comp of container.components) {
                     if (comp.id === id) return container
                     else if (comp.type === "page") {
-                        let result = this.getComponent(id, comp.components)
-                        if (result !== null) return comp.components
+                        let result = this.getComponent(id, comp)
+                        if (result !== null) return comp
                     }
                 }
                 return null
+            },
+            forEachComponent(func, container = this) {
+                for (let comp of container.components) {
+                    if (comp.type === "page") {
+                        this.forEachComponent(func, comp)
+                    }
+                    func(comp)
+                }
             },
 
             addField() {
@@ -186,12 +194,13 @@
                 getPhoneWidth: () => (this.$refs.phone.offsetWidth),
                 getPhoneHeight: () => (this.$refs.phone.offsetHeight),
                 snap: this.snap,
-                selectedComponent: () => (this.selectedComponent),
+                getSelectedComponent: () => (this.selectedComponent),
                 layout: this.layout,
                 setSelectedComponent: (to) => {
-                    if (this.selectedComponent !== null) this.selectedComponent.selected = false
                     this.selectedComponent = to
-                    to.selected = true
+                    this.forEachComponent((comp) => {
+                        comp.selected = comp.id === to.id
+                    })
                 },
                 setComponent: (id,to) => {
                     let a = this.getComponent(id)

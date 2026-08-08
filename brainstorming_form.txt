@@ -82,14 +82,7 @@ Component
 }
 
 Expression Examples
-[["var", "a", "=", "const", "5"], "and", true]
-
-Expression Things:
-X Add X
-X Subtract X
-X Multiply X 
-X Divide X
-X String Combine X
+["add",["num",5],["field",2]]
 
 
 

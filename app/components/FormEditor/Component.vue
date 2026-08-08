@@ -1,6 +1,11 @@
 <template>
-    <div :style="styles()" class="component f c" :class="{selected: component.selected}" @mousedown.prevent.stop="beginDrag('x', 'y', false)">
+    <template v-if="component.type === 'page'" v-for="(component, index) in component.components">
+        <FormEditorComponent :component="component" :index="index"/>
+    </template>
+    <div v-else :style="styles()" class="component f c" :class="{selected: component.selected}" @mousedown.prevent.stop="beginDrag('x', 'y', false)">
         <div class="dragPoint br align-end justify-end" ref="br" @mousedown.prevent.stop="beginDrag('width', 'height', false)"></div>
+        
+            
         <template v-if="component.type === 'label'">
             <img v-if="component.image !== null" :src="component.image">
             <div class="content f c">{{ component.labelText }}</div>

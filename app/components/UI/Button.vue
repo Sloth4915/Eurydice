@@ -22,6 +22,10 @@
         background-color: var(--secondary);
     }
 
+    button:disabled {
+        background-color: var(--panel-secondary);
+    }
+
     button.nopadding {
         padding: 0;
     }

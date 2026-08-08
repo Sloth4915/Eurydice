@@ -22,6 +22,7 @@
     --font: rgb(8, 8, 8);
 
     --panel: rgb(236, 236, 236);
+    --panel-secondary: rgb(185, 185, 185);
 
     --primary: rgb(238, 239, 244);
     --secondary: rgb(170, 182, 243);
@@ -35,6 +36,7 @@
     background-color: rgb(8, 1, 18);
 
     --panel: rgb(22, 21, 24);
+    --panel-secondary: rgb(85, 85, 85);
 
     --font: rgb(244, 244, 244);
 

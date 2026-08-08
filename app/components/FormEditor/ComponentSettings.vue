@@ -62,6 +62,7 @@
                 <optgroup label="Eurydice">
                     <option value="panel">BG Default</option>
                     <option value="font">Font Default</option>
+                    <option value="panel-secondary">Button Disabled</option>
                     <option value="primary">Theme Primary</option>
                     <option value="secondary">Theme Secondary</option>
                     <option value="outline">Theme Outline</option>
@@ -88,6 +89,7 @@
                 <optgroup label="Eurydice">
                     <option value="panel">BG Default</option>
                     <option value="font">Font Default</option>
+                    <option value="panel-secondary">Button Disabled</option>
                     <option value="primary">Theme Primary</option>
                     <option value="secondary">Theme Secondary</option>
                     <option value="outline">Theme Outline</option>
@@ -155,16 +157,15 @@
             }
         },
         mounted() {
-            watch(() => this.component.id, this.onComponentChange)
-            watch(() => this.component.type, this.onComponentChange)
+            
         },
         unmounted() {
             
         },
+        beforeUpdate() {
+            if (this.component.type === "page") this.option = "behaviour"
+        },
         methods: {
-            onComponentChange() {
-                if (this.component.type === "page") this.option = "behaviour"
-            }
         },
         inject: ["snap", "layout"]
     }
