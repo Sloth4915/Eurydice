@@ -1,15 +1,22 @@
 <template>
     <div class="f gap cy" v-if="type === 'expression'">
         <label>{{ label }}</label>
-        <div class="expression f" v-if="Array.isArray(this.value)">
-                <FormEditorExpressionEditor v-for="(item, index) in this.value" v-model="this.value[index]" type="expression"/>
-        </div>
-        <div class="expression f single" @mouseover="hovered = true" @mouseleave="hovered = false" v-else>
-            <UIButton class="open nopadding" title="Add Before" v-show="hovered" @click="value = 'test'">+</UIButton>
-            {{ value }}
-            <UIButton class="open nopadding" title="See Options" v-show="hovered" @click="value = 'test'">˅</UIButton>
-            <UIButton class="open nopadding" title="Add After" v-show="hovered" @click="value = 'test'">+</UIButton>
-        </div>
+        <UIButton @click="this.$refs.dialog.openPopup()">{{ stem }}</UIButton> {{ params }}
+        <UIDialog closeable ref="dialog">
+            <div class="row">
+                <div class="col">
+                    <UIButton :selected="popupPhase === 'values'" @click="popupPhase = 'values'">Values</UIButton>
+                    <UIButton :selected="popupPhase === 'fields'" @click="popupPhase = 'fields'">Fields</UIButton>
+                </div>
+                <div class="col" v-show="popupPhase === 'values'">
+                    <UIButton>Number</UIButton>
+                    <UIButton>Bool</UIButton>
+                    <UIButton>String</UIButton>
+                    <UIButton>Tags</UIButton>
+                    <UIButton>Tags</UIButton>
+                </div>
+            </div>
+        </UIDialog>
     </div>
     <div v-else>
         {{ label }} ACTION
@@ -35,11 +42,15 @@
             modelValue: Array,
             type: {
                 default: "expression", // expression/action
-            }
+            },
+            restrictValuesTo: {
+                type: Array || String,
+                default: [FormExpression.ANY, FormExpression.NUM]
+            },
         },
         data() {
             return {
-                hovered: false
+                popupPhase: "values",
             }
         },
         computed: {
@@ -49,6 +60,20 @@
                 },
                 set(value) {
                     this.$emit('update:modelValue', value)
+                }
+            },
+            stem: {
+                get() { return this.value[0] },
+                set(value) { 
+                    this.value[0] = value
+                    // switch for setting params
+                    this.$emit('update:modelValue', value)
+                }
+            },
+            params: {
+                get() { return this.value.slice(1) },
+                set(value) { 
+                    
                 }
             }
         },

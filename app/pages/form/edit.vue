@@ -121,7 +121,7 @@
                     name: "Untitled Component",
                     type: "label",
                     value: "",
-                    showIf: [["var", "a", "=", "const", "5"], "and", true],
+                    showIf: ["bool", true],
                     layouts: {
                         portrait: {
                             x: 10,
@@ -176,6 +176,12 @@
                     func(comp)
                 }
             },
+            setSelectedComponent(to) {
+                this.selectedComponent = to
+                this.forEachComponent((comp) => {
+                    comp.selected = comp.id === to.id
+                })
+            },
 
             addField() {
                 this.fields.push({
@@ -196,12 +202,7 @@
                 snap: this.snap,
                 getSelectedComponent: () => (this.selectedComponent),
                 layout: this.layout,
-                setSelectedComponent: (to) => {
-                    this.selectedComponent = to
-                    this.forEachComponent((comp) => {
-                        comp.selected = comp.id === to.id
-                    })
-                },
+                setSelectedComponent: this.setSelectedComponent,
                 setComponent: (id,to) => {
                     let a = this.getComponent(id)
                     a = to

@@ -81,10 +81,49 @@ Component
     bgColor: options are in code in ComponentSettings.vue
 }
 
-Expression Examples
+
+
+
+
+
+Expressions
 ["add",["num",5],["field",2]]
 
+-Values-
+num literal
+bool literal
+str literal
+tags fieldid literal
+field id
 
+-Transform-
+if condition trueVal falseVal
+add ...                                     Supports strings
+sub ...
+mul ...
+div ...
+mean ...
 
-Expression Constants
-Alliance
+-Compare-
+less a b
+greater a b
+less= a b
+greater= a b
+equal a b
+not condition
+and a b
+or a b
+xor a b
+nor a b
+nand a b
+xnor a b
+length str/tags/photosField
+
+-Constants-
+str alliance
+str position                "Red 1" etc
+str teamName
+num teamNum
+num matchNum
+str scouter
+

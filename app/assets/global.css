@@ -86,6 +86,7 @@ body {
 .c,
 .cx,
 .cy,
+.row,
 .col,
 .gap,
 .fill-children,
@@ -106,6 +107,9 @@ body {
     text-align: center;
 }
 
+.row {
+    flex-direction: row;
+}
 .col {
     flex-direction: column;
 }

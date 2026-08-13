@@ -1,5 +1,5 @@
 <template>
-    <button class="cursor" v-bind="$attrs">
+    <button class="cursor" :class="{selected}" v-bind="$attrs">
         <slot/>
     </button>
 </template>
@@ -18,7 +18,7 @@
         padding: 0.2rem;
     }
 
-    [selected], .selected {
+    .selected {
         background-color: var(--secondary);
     }
 
@@ -34,7 +34,7 @@
 <script>
     export default {
         props: {
-            
+            selected: Boolean,
         },
         data() {
             return {
