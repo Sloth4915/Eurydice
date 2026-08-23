@@ -139,10 +139,10 @@
 
                     labelText: "Label",
                     image: null,
-                    onTap: [],
-                    onDown: [],
-                    onUp: [],
-                    onChange: [],
+                    onTap: FormExpression.getNoneAction(),
+                    onDown: FormExpression.getNoneAction(),
+                    onUp: FormExpression.getNoneAction(),
+                    onChange: FormExpression.getNoneAction(),
                     components: [],
                 })
                 this.setSelectedComponent(to[to.length-1]) 

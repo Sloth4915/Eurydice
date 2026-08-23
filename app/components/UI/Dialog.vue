@@ -1,6 +1,6 @@
 <template>
     <dialog ref="dialog" :class="{'holder': open, popup: popup, normal: !popup}" :style="{top: y + 'px', left: x + 'px'}">
-        <div class="panel f cy col" ref="panel">
+        <div class="dialog-panel panel f cy col" ref="panel">
             <slot/>
         </div>
     </dialog>
@@ -14,8 +14,11 @@
         max-height: 100vh;
     }
     dialog.normal {
-        background: rgba(0,0,0,0.2);
+        background: var(--drop-shadow);
         backdrop-filter: blur(3px);
+    }
+    dialog.normal .dialog-panel {
+        filter: drop-shadow(4px 4px 4px var(--drop-shadow));
     }
     dialog.popup {
         margin: 0;
@@ -24,6 +27,7 @@
         max-height: fit-content;
         outline: none;
         background: none;
+        filter: drop-shadow(4px 4px 4px var(--drop-shadow));
     }
     dialog.popup .panel {
         border: 1px solid var(--font);
@@ -60,7 +64,6 @@
                 this.$refs.dialog.show()
                 this.popup = true
                 this.open = true
-                console.log(x,y)
                 this.x = x.value + 0
                 this.y = y.value + 0
             },

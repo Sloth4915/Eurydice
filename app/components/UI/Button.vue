@@ -11,6 +11,7 @@
         border-radius: 4px;
         font-size: 1rem;
         padding: 0 1rem;
+        min-height: 0.9rem;
     }
 
     button.small {

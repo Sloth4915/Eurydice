@@ -117,7 +117,7 @@
         <UIImageUpload :allowMultiple="false" v-model="component.image" :deletable="true" v-if="['label','button','draw'].includes(component.type)"/>
     </div>
     <div class="f col gap" v-show="option == 'behaviour'">
-        <FormEditorExpressionEditor label="Show If" v-model="component.showIf"/>
+        <FormEditorExpressionEditor label="Show If" :restrictValuesTo="FormExpression.BOOL" v-model="component.showIf"/>
         <template v-if="component.type === 'button'">
             <FormEditorExpressionEditor label="On Tap" :restrictValuesTo="FormExpression.ACTION" v-model="component.onTap"/>
             <FormEditorExpressionEditor label="On Down" :restrictValuesTo="FormExpression.ACTION" v-model="component.onDown"/>

@@ -15,6 +15,9 @@
     --pink: rgb(246, 152, 255);
     --brown: rgb(116, 82, 50);
     --transparent: transparent;
+
+    /** Drop shadow effects and other things like UIDialog background */
+    --drop-shadow: rgba(0,0,0,.2);
 }
 
 :root.light {
