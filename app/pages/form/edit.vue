@@ -121,7 +121,7 @@
                     name: "Untitled Component",
                     type: "label",
                     value: "",
-                    showIf: ["bool", true],
+                    showIf: new FormExpressionValue(FormExpression.BOOL, true),
                     layouts: {
                         portrait: {
                             x: 10,

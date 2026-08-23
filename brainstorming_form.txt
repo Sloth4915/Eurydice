@@ -9,6 +9,8 @@ Form
     timedFields: []                     
 
     layouts: {}
+
+    version_num: 0              Might be important for sync purposes
 }
 
 Field
@@ -98,11 +100,13 @@ field id
 
 -Transform-
 if condition trueVal falseVal
-add ...                                     Supports strings
-sub ...
-mul ...
-div ...
-mean ...
+Add ...                                     Supports strings
+Subtract ...
+Multiply ...
+Divide ...
+Mean ...
+Median ...
+Power ...
 
 -Compare-
 less a b
@@ -111,12 +115,8 @@ less= a b
 greater= a b
 equal a b
 not condition
-and a b
-or a b
-xor a b
-nor a b
-nand a b
-xnor a b
+all_true a b              And
+any_true a b              Or
 length str/tags/photosField
 
 -Constants-
@@ -127,3 +127,14 @@ num teamNum
 num matchNum
 str scouter
 
+-Data Actions-
+increment field delta
+set field value
+tagToggle field tag
+tagTrue field tag
+tagFalse field tag
+
+-Other Actions-
+doMultiple ...
+vibrate strength duration
+none

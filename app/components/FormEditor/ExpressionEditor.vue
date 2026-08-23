@@ -1,25 +1,25 @@
 <template>
-    <div class="f gap cy" v-if="type === 'expression'">
+    <div class="f gap cy">
         <label>{{ label }}</label>
-        <UIButton @click="this.$refs.dialog.openPopup()">{{ stem }}</UIButton> {{ params }}
+        <UIButton @click="this.$refs.dialog.openPopup()">temporary open popup</UIButton>
         <UIDialog closeable ref="dialog">
             <div class="row">
                 <div class="col">
                     <UIButton :selected="popupPhase === 'values'" @click="popupPhase = 'values'">Values</UIButton>
                     <UIButton :selected="popupPhase === 'fields'" @click="popupPhase = 'fields'">Fields</UIButton>
+                    <!-- TODO: loop through formexpression pages, find all that have children functions that fit type requirements -->
                 </div>
                 <div class="col" v-show="popupPhase === 'values'">
-                    <UIButton>Number</UIButton>
-                    <UIButton>Bool</UIButton>
-                    <UIButton>String</UIButton>
-                    <UIButton>Tags</UIButton>
-                    <UIButton>Tags</UIButton>
+                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.NUM)">Number</UIButton>
+                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.BOOL)">Bool</UIButton>
+                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.STR)">String</UIButton>
+                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.TAGS)">Tags</UIButton>
+                </div>
+                <div class="col" v-show="popupPhase === 'fields'">
+                    get list of options
                 </div>
             </div>
         </UIDialog>
-    </div>
-    <div v-else>
-        {{ label }} ACTION
     </div>
 </template>
 
@@ -29,6 +29,7 @@
         padding: 0.2rem;
         gap: 0.2rem;
         border-radius: 0.01rem;
+        min-height: 0.5rem;
     }
 </style>
 
@@ -40,9 +41,6 @@
                 default: "",
             },
             modelValue: Array,
-            type: {
-                default: "expression", // expression/action
-            },
             restrictValuesTo: {
                 type: Array || String,
                 default: [FormExpression.ANY, FormExpression.NUM]
@@ -62,20 +60,6 @@
                     this.$emit('update:modelValue', value)
                 }
             },
-            stem: {
-                get() { return this.value[0] },
-                set(value) { 
-                    this.value[0] = value
-                    // switch for setting params
-                    this.$emit('update:modelValue', value)
-                }
-            },
-            params: {
-                get() { return this.value.slice(1) },
-                set(value) { 
-                    
-                }
-            }
         },
         mounted() {
             
@@ -84,7 +68,17 @@
             
         },
         methods: {
-            
+            allowType(filter, type) {
+                if (!Array.isArray(filter)) filter = [filter]
+                if (!Array.isArray(type)) type = [type]
+                for (let x of filter) {
+                    for (let y of type) {
+                        if (y == FormExpression.ALLOW_AS_PARAM_ALWAYS) return true
+                        if (x == y) return true
+                    }
+                }
+                return false
+            }
         },
     }
 </script>

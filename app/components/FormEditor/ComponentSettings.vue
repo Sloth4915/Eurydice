@@ -119,9 +119,9 @@
     <div class="f col gap" v-show="option == 'behaviour'">
         <FormEditorExpressionEditor label="Show If" v-model="component.showIf"/>
         <template v-if="component.type === 'button'">
-            <FormEditorExpressionEditor label="On Tap" type="action" v-model="component.onTap"/>
-            <FormEditorExpressionEditor label="On Down" type="action" v-model="component.onDown"/>
-            <FormEditorExpressionEditor label="On Up" type="action" v-model="component.onUp"/>
+            <FormEditorExpressionEditor label="On Tap" :restrictValuesTo="FormExpression.ACTION" v-model="component.onTap"/>
+            <FormEditorExpressionEditor label="On Down" :restrictValuesTo="FormExpression.ACTION" v-model="component.onDown"/>
+            <FormEditorExpressionEditor label="On Up" :restrictValuesTo="FormExpression.ACTION" v-model="component.onUp"/>
         </template>
         <template v-else-if="component.type === 'dropdown'">
             <FormEditorExpressionEditor label="On Change" type="action" v-model="component.onChange"/>

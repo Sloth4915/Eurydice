@@ -1,10 +1,15 @@
 <template>
     <div class="navigation between fw cy">
-        <h1 class="cursor" @click="navigateTo('/')">Eurydice</h1>
+        <h1 class="cursor">
+            <NuxtLink href="/">Eurydice</NuxtLink>
+        </h1>
 
         <div class="f">
+            
         <UIButton class="small" @click="toggleTheme">Theme</UIButton>
-        <UIButton class="small" @click="navigateTo('/account')">Login</UIButton>
+        <UIButton class="small">
+            <NuxtLink href="/account">Login</NuxtLink>
+        </UIButton>
         </div>
     </div>
     <slot/>
