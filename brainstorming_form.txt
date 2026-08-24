@@ -109,17 +109,17 @@ Median ...
 Power ...
 
 -Compare-
-less a b
-greater a b
-less= a b
-greater= a b
+< a b
+> a b
+≤ a b
+≥ a b
 equal a b
 not condition
-all_true a b              And
-any_true a b              Or
-length str/tags/photosField
+and ...
+or ...
+"String Length" str
 
--Constants-
+-Context-
 str alliance
 str position                "Red 1" etc
 str teamName
@@ -128,7 +128,7 @@ num matchNum
 str scouter
 
 -Data Actions-
-increment field delta
+change field delta
 set field value
 tagToggle field tag
 tagTrue field tag

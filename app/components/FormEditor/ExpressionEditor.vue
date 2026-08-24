@@ -1,16 +1,17 @@
 <template>
     <div class="f gap cy">
         <label>{{ label }}</label>
-        <div :title="value.description" class="f expression">
+        <div :title="value.name + ' - ' + value.description" class="f expression" :class="{'color': (nest % 2) === 0}">
             <UIButton @click.stop="this.$refs.dialog.openPopup()">
                 <template v-if="value.showTitle">{{ value.name }}</template>
+                <template v-else>Change</template>
             </UIButton>
             <template v-for="elem in value.visualParams">
                 <template v-if="typeof elem === 'string'">
-                    <div>{{ elem }}</div>
+                    <div class="f c">{{ elem }}</div>
                 </template>
                 <template v-else>
-                    <ExpressionEditor v-model="value.params[elem]" :restrictValuesTo="whatTypesAreAllowedForThisChildParameter(value.paramTypes[elem])"/>
+                    <ExpressionEditor v-model="value.params[elem]" :restrictValuesTo="whatTypesAreAllowedForThisChildParameter(value.paramTypes[elem])" :nest="nest+1"/>
                 </template>
             </template>
         </div>
@@ -19,7 +20,8 @@
                 <div class="col">
                     Category
                     <UIButton :selected="popupPhase === 'values'" @click="popupPhase = 'values'">Values</UIButton>
-                    <UIButton :selected="popupPhase === 'fields'" @click="popupPhase = 'fields'">Fields</UIButton>
+                    <UIButton :selected="popupPhase === 'fields'" @click="popupPhase = 'fields'" v-show="allowType(restrictValuesTo, [FormExpression.NUM, FormExpression.BOOL, FormExpression.STR, FormExpression.TAGS, FormExpression.FIELD])">Fields</UIButton>
+                    <UIButton :selected="popupPhase === 'context'" @click="popupPhase = 'context'" v-show="allowType(restrictValuesTo, [FormExpression.NUM, FormExpression.BOOL, FormExpression.STR, FormExpression.TAGS])">Context</UIButton>
                     <template v-for="(arr, name) in allowedExpressionFunctions">
                         <UIButton :selected="popupPhase === name" @click="popupPhase = name">{{ name }}</UIButton>
                     </template>
@@ -32,7 +34,10 @@
                     <UIButton v-show="allowType(restrictValuesTo, FormExpression.TAGS)">Tags</UIButton>
                 </div>
                 <div class="col" v-show="popupPhase === 'fields'">
-                    TODO: get list of options
+                    TODO: Tag Select (also figure out how is that going to be represented in code)
+                </div>
+                <div class="col" v-show="popupPhase === 'context'">
+                    TODO: Context Select (also figure out how is that going to be represented in code)
                 </div>
                 <template v-for="(arr, name) in allowedExpressionFunctions">
                         <div class="col" v-show="popupPhase === name">
@@ -49,11 +54,15 @@
 <style scoped>
     .expression {
         border: 1px solid var(--outline);
-        padding: 0.2rem;
-        gap: 0.2rem;
-        border-radius: 0.01rem;
+        padding: 0.4rem;
+        gap: 0.3rem;
+        border-radius: 0.5rem;
         min-width: 2rem;
         min-height: 0.8rem;
+        background-color: var(--panel);
+    }
+    .expression.color {
+        background-color: var(--secondary);
     }
     .popup-divider {
         width: 1px;
@@ -74,6 +83,9 @@
                 type: [Array, Number],
                 default: [FormExpression.NUM, FormExpression.BOOL, FormExpression.STR, FormExpression.TAGS, FormExpression.FIELD]
             },
+            nest: {
+                default: 1,
+            }
         },
         data() {
             return {
@@ -119,7 +131,6 @@
                 // TODO implement allowed params
                 for (let x of filter) {
                     for (let y of type) {
-                        console.log(x,y)
                         if (y == FormExpression.ALLOW_AS_PARAM_ALWAYS) return true
                         if (x == y) return true
                     }

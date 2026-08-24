@@ -35,6 +35,9 @@ export class FormExpression {
     static TAGS = 40
     static FIELD = 50
     static ACTION = 60
+
+    // TODO Implement this logic in constructor and ExpressionEditor
+    /** The next param and UI elements will be repeated. It will be passed in as a single array with all items */
     static REPEAT_NEXT = 70
 
     /** It will allow the parameters of the parent. Can be both a param type and return type */
@@ -43,8 +46,8 @@ export class FormExpression {
     /** Exists for things like "if" that can return whatever is required. Always allowed as a parameter. */
     static ALLOW_AS_PARAM_ALWAYS = 90
 
-    static getNoneAction = () => { return new FormExpression(FormExpression.ACTION, "None", "Does nothing", [], function(params) { return function() {} }) }
-    static getNull = () => { return new FormExpression(FormExpression.ALLOW_AS_PARAM_ALWAYS, "", "", [], function(params) { return function() {} }) }
+    static getNoneAction = () => { return new FormExpression(FormExpression.ACTION, "None", "Does nothing", [], function(params) { return () => {}  }) }
+    static getNull = () => { return new FormExpression(FormExpression.ALLOW_AS_PARAM_ALWAYS, "", "", [], function(params) { }) }
 
 }
 
@@ -68,13 +71,11 @@ export class FormExpressionValue extends FormExpression {
     }
 }
 
+// TODO implement logic for all below
 export const getFormExpressions = () => { 
     return {
         Transform: [
-            new FormExpression(FormExpression.ALLOW_AS_PARAM_ALWAYS, "If", "", [FormExpression.BOOL, "true:", FormExpression.ALLOWED_PARAMS, "false:", FormExpression.ALLOWED_PARAMS], function(params) {
-                if (params[0]) return params[1]
-                return params[2]
-            }),
+            new FormExpression(FormExpression.ALLOW_AS_PARAM_ALWAYS, "If", "", [FormExpression.BOOL, "true:", FormExpression.ALLOWED_PARAMS, "false:", FormExpression.ALLOWED_PARAMS], function(params) {}),
             new FormExpression(FormExpression.NUM, "Add", "", [false, FormExpression.NUM, FormExpression.REPEAT_NEXT, "+", FormExpression.NUM], function(params) {}),
             new FormExpression(FormExpression.STR, "String Concatenate", "", [false, "StrConcat", [FormExpression.NUM, FormExpression.STR], FormExpression.REPEAT_NEXT, "+", [FormExpression.NUM, FormExpression.STR]], function(params) {}),
             new FormExpression(FormExpression.NUM, "Subtract", "", [false, FormExpression.NUM, FormExpression.REPEAT_NEXT, "-", FormExpression.NUM], function(params) {}),
@@ -85,12 +86,25 @@ export const getFormExpressions = () => {
             new FormExpression(FormExpression.NUM, "Power", "", [false, FormExpression.NUM, "^", FormExpression.NUM], function(params) {}),
         ],
         Compare: [
-
+            new FormExpression(FormExpression.BOOL, "<", "", [false, FormExpression.NUM, "<", FormExpression.NUM], function(params) {}),
+            new FormExpression(FormExpression.BOOL, "≤", "", [false, FormExpression.NUM, "≤", FormExpression.NUM], function(params) {}),
+            new FormExpression(FormExpression.BOOL, ">", "", [false, FormExpression.NUM, ">", FormExpression.NUM], function(params) {}),
+            new FormExpression(FormExpression.BOOL, "≥", "", [false, FormExpression.NUM, "≥", FormExpression.NUM], function(params) {}),
+            new FormExpression(FormExpression.BOOL, "Not", "", [FormExpression.BOOL], function(params) {}),
+            new FormExpression(FormExpression.BOOL, "And", "", [false, FormExpression.BOOL, FormExpression.REPEAT_NEXT, "&", FormExpression.BOOL], function(params) {}),
+            new FormExpression(FormExpression.BOOL, "Or", "", [false, FormExpression.BOOL, FormExpression.REPEAT_NEXT, "or", FormExpression.BOOL], function(params) {}),
+            new FormExpression(FormExpression.BOOL, "String Length", "", [FormExpression.String], function(params) {}),
         ],
-        Constants: [
-
+        Context: [
+            
         ],
         Actions: [
+            new FormExpression(FormExpression.ACTION, "Change", "", [FormExpression.FIELD, "by", FormExpression.NUM], function(params) { return () => {} }),
+            new FormExpression(FormExpression.ACTION, "Set", "", [FormExpression.FIELD, "to", FormExpression.ALLOW_AS_PARAM_ALWAYS], function(params) { return () => {} }),
+            new FormExpression(FormExpression.ACTION, "Toggle Tag", "", [FormExpression.FIELD, "toggle", FormExpression.TAGS], function(params) { return () => {} }),
+            new FormExpression(FormExpression.ACTION, "Set Tag True", "", [FormExpression.FIELD, "set", FormExpression.TAGS], function(params) { return () => {} }),
+            new FormExpression(FormExpression.ACTION, "Set Tag False", "", [FormExpression.FIELD, "set", FormExpression.TAGS], function(params) { return () => {} }),
+            new FormExpression(FormExpression.ACTION, "Vibrate", "", ["strength", FormExpression.NUM, "duration", FormExpression.NUM], function(params) { return () => {} }),
             FormExpression.getNoneAction()
         ]
     }
