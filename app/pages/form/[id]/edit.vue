@@ -11,8 +11,8 @@
                     Fields
                     <UIButton @click="addField">Add Field</UIButton>
                 </div>
-                <template v-for="field of fields">
-                    <FormEditorListedField :field="field"/>
+                <template v-for="(field, index) of fields">
+                    <FormEditorListedField :field="field" :index="index"/>
                 </template>
             </div>
         </div>
@@ -38,7 +38,7 @@
 
         <div class="phone panel" ref="phone">
             <template v-for="(component, index) in components">
-                <FormEditorComponent :component="component" :index="index"/>
+                <FormEditorComponentDisplay :component="component" :index="index"/>
             </template>
         </div>
     </div>
@@ -208,7 +208,8 @@
                     a = to
                 },
                 getComponentContainer: this.getComponentContainer,
-                addComponent: this.addComponent
+                addComponent: this.addComponent,
+                fields: this.fields
             }
         }
     }

@@ -11,6 +11,7 @@
                 <option value="imgs">Images</option>
             </UIDropdown>
             <UIInput v-model="field.name"/>
+            <UIButton class="small" @click="fields.splice(index, 1)">🗑️</UIButton>
             <div class="fill"/>
             {{ field.visualId }}
         </div>
@@ -125,7 +126,8 @@
 <script>
     export default {
         props: {
-            field: Object
+            field: Object,
+            index: Number,
         },
         data() {
             return {
@@ -172,5 +174,6 @@
                 console.log(this.field)
             }
         },
+        inject: ["fields"]
     }
 </script>
