@@ -18,8 +18,9 @@
             <option value="draw" :disabled="component.components.length !== 0">Draw</option>
         </UIDropdown>
         <UIInput v-model="component.name"/>
-        <UIButton v-show="this.component.type === 'page'" @click="addComponent(this.component.components)">+</UIButton>
+        <UIButton class="small" v-show="this.component.type === 'page'" @click="addComponent(this.component.components)">+</UIButton>
         <div class="square c" :style="styles()" v-show="['label','button','dropdown','shortText','longText','number'].includes(this.component.type)">🗚</div>
+        <UIButton class="small" @click="container.components.splice(index, 1)">🗑️</UIButton>
     </div>
     <template v-if="this.component.type === 'page'" v-for="(comp, index) in this.component.components">
         <FormEditorListedComponent :component="comp" :index="index" :nest="nest + 1" :container="component"/>

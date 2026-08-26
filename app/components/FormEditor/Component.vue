@@ -10,6 +10,10 @@
             <img v-if="component.image !== null" :src="component.image">
             <div class="content f c">{{ component.labelText }}</div>
         </template>
+        <template v-else-if="component.type === 'button'">
+            <img v-if="component.image !== null" :src="component.image">
+            <div class="content f c">{{ component.labelText }}</div>
+        </template>
         <template v-else>
             a {{ component.type }} called "{{ component.name }}"
         </template>
