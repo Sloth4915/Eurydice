@@ -34,7 +34,7 @@
                     <UIButton v-show="allowType(restrictValuesTo, FormExpression.TAGS)">Tags</UIButton>
                 </div>
                 <div class="col" v-show="popupPhase === 'fields'">
-                    TODO: Tag Select (also figure out how is that going to be represented in code)
+                    TODO: Field Select (also figure out how is that going to be represented in code)
                 </div>
                 <div class="col" v-show="popupPhase === 'context'">
                     TODO: Context Select (also figure out how is that going to be represented in code)

@@ -27,6 +27,15 @@ export class FormExpression {
         }
         this.calculate = calculate
         this.expressionVersion = 1 // For backwards compatibility purposes if there are breaking changes in the future.
+        this.type = "function"
+    }
+
+    // TODO implement these
+    toId() {
+        return ''
+    }
+    static fromIdString() {
+        return new FormExpression()
     }
 
     static NUM = 10
@@ -48,7 +57,6 @@ export class FormExpression {
 
     static getNoneAction = () => { return new FormExpression(FormExpression.ACTION, "None", "Does nothing", [], function(params) { return () => {}  }) }
     static getNull = () => { return new FormExpression(FormExpression.ALLOW_AS_PARAM_ALWAYS, "", "", [], function(params) { }) }
-
 }
 
 export class FormExpressionValue extends FormExpression {
@@ -68,6 +76,14 @@ export class FormExpressionValue extends FormExpression {
         this.calculate = function() {
             return self.value
         }
+        this.type = "value"
+    }
+}
+
+
+export class FormExpressionField extends FormExpression {
+    constructor(type, value) {
+        // TODO implement
     }
 }
 
@@ -84,6 +100,12 @@ export const getFormExpressions = () => {
             new FormExpression(FormExpression.NUM, "Mean", "", [FormExpression.NUM, FormExpression.REPEAT_NEXT, FormExpression.NUM], function(params) {}),
             new FormExpression(FormExpression.NUM, "Median", "", [FormExpression.NUM, FormExpression.REPEAT_NEXT, FormExpression.NUM], function(params) {}),
             new FormExpression(FormExpression.NUM, "Power", "", [false, FormExpression.NUM, "^", FormExpression.NUM], function(params) {}),
+            new FormExpression(FormExpression.STR, "String to Number", "", [FormExpression.STR], function(params) {}),
+            new FormExpression(FormExpression.NUM, "Number to String", "", [FormExpression.NUM], function(params) {}),
+            new FormExpression(FormExpression.STR, "Lowercase", "", [FormExpression.STR], function(params) {}),
+            new FormExpression(FormExpression.STR, "Uppercase", "", [FormExpression.STR], function(params) {}),
+            new FormExpression(FormExpression.STR, "Replace All", "", [FormExpression.STR, "instances of", FormExpression.STR, "with", FormExpression.STR], function(params) {}),
+            new FormExpression(FormExpression.STR, "Trim Edges", "", [FormExpression.STR], function(params) {}),
         ],
         Compare: [
             new FormExpression(FormExpression.BOOL, "<", "", [false, FormExpression.NUM, "<", FormExpression.NUM], function(params) {}),
@@ -96,7 +118,12 @@ export const getFormExpressions = () => {
             new FormExpression(FormExpression.BOOL, "String Length", "", [FormExpression.String], function(params) {}),
         ],
         Context: [
-            
+            new FormExpression(FormExpression.STR, "Alliance Color", "", [], function(params) {}),
+            new FormExpression(FormExpression.STR, "Robot DS #", "Robot driver station number", [], function(params) {}),
+            new FormExpression(FormExpression.NUM, "Team name", "", [], function(params) {}),
+            new FormExpression(FormExpression.STR, "Position", "", [], function(params) {}),
+            new FormExpression(FormExpression.STR, "", "", [], function(params) {}),
+            new FormExpression(FormExpression.STR, "", "", [], function(params) {}),
         ],
         Actions: [
             new FormExpression(FormExpression.ACTION, "Change", "", [FormExpression.FIELD, "by", FormExpression.NUM], function(params) { return () => {} }),
