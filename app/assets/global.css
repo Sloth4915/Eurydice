@@ -148,6 +148,10 @@ body {
     align-items: flex-end;
 }
 
+.f-wrap {
+    flex-wrap: wrap;
+}
+
 /*#endregion Flex*/
 
 /** Full width */

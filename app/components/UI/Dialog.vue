@@ -28,6 +28,7 @@
         outline: none;
         background: none;
         filter: drop-shadow(4px 4px 4px var(--drop-shadow));
+        z-index: 100000000000;
     }
     dialog.popup .panel {
         border: 1px solid var(--font);

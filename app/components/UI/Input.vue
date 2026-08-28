@@ -7,7 +7,7 @@
             v-if="type === 'checkbox'"
             :checked="modelValue"
             @change="$emit('update:modelValue', $event.target.checked)" 
-            class="custom-input"
+            class="custom-input checkbox"
             :id="id"
             :placeholder="label ?? ''"
             :type="type"
@@ -36,7 +36,7 @@
     }
     input.text {}
     input.number {
-        width: 70px;
+        width: 4.5rem;
     }
     input:disabled {
         background-color: var(--panel);
@@ -47,8 +47,17 @@
         font-size: 1.15rem;
     }
 
+    input.small {
+        width: 5rem;
+    }
+
     input::placeholder {
         color: color-mix(in srgb, var(--font), var(--primary));
+    }
+    
+    .checkbox {
+        width: 1rem;
+        height: 1rem;
     }
 </style>
 

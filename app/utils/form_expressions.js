@@ -32,9 +32,11 @@ export class FormExpression {
 
     // TODO implement these
     toId() {
-        return ''
+        if (this.type === "function") {
+            return [this.expressionVersion, this.type, this.name, this.params]
+        }
     }
-    static fromIdString() {
+    static fromId() {
         return new FormExpression()
     }
 
@@ -43,17 +45,23 @@ export class FormExpression {
     static STR = 30
     static TAGS = 40
     static FIELD = 50
-    static ACTION = 60
+    static FIELD_STR = 60
+    static FIELD_BOOL = 70
+    static FIELD_INT = 80
+    static FIELD_TAGS = 90
+    static FIELD_IMG = 100
+
+    static ACTION = 200
 
     // TODO Implement this logic in constructor and ExpressionEditor
     /** The next param and UI elements will be repeated. It will be passed in as a single array with all items */
-    static REPEAT_NEXT = 70
+    static REPEAT_NEXT = 300
 
     /** It will allow the parameters of the parent. Can be both a param type and return type */
-    static ALLOWED_PARAMS = 80
+    static ALLOWED_PARAMS = 310
 
     /** Exists for things like "if" that can return whatever is required. Always allowed as a parameter. */
-    static ALLOW_AS_PARAM_ALWAYS = 90
+    static ALLOW_AS_PARAM_ALWAYS = 320
 
     static getNoneAction = () => { return new FormExpression(FormExpression.ACTION, "None", "Does nothing", [], function(params) { return () => {}  }) }
     static getNull = () => { return new FormExpression(FormExpression.ALLOW_AS_PARAM_ALWAYS, "", "", [], function(params) { }) }
@@ -82,8 +90,14 @@ export class FormExpressionValue extends FormExpression {
 
 
 export class FormExpressionField extends FormExpression {
-    constructor(type, value) {
-        // TODO implement
+    constructor(fieldId) {
+        super(type, '', "Field", [false], () => { })
+        this.field = field
+        let self = this
+        this.calculate = function () {
+            return self.value
+        }
+        this.type = "field"
     }
 }
 
@@ -111,7 +125,8 @@ export const getFormExpressions = () => {
             new FormExpression(FormExpression.BOOL, "<", "", [false, FormExpression.NUM, "<", FormExpression.NUM], function(params) {}),
             new FormExpression(FormExpression.BOOL, "≤", "", [false, FormExpression.NUM, "≤", FormExpression.NUM], function(params) {}),
             new FormExpression(FormExpression.BOOL, ">", "", [false, FormExpression.NUM, ">", FormExpression.NUM], function(params) {}),
-            new FormExpression(FormExpression.BOOL, "≥", "", [false, FormExpression.NUM, "≥", FormExpression.NUM], function(params) {}),
+            new FormExpression(FormExpression.BOOL, "≥", "", [false, FormExpression.NUM, "≥", FormExpression.NUM], function (params) { }),
+            new FormExpression(FormExpression.BOOL, "=", "", [false, [FormExpression.NUM, FormExpression.BOOL, FormExpression.STR, FormExpression.TAGS], "=", [FormExpression.NUM, FormExpression.BOOL, FormExpression.STR, FormExpression.TAGS]], function (params) { }),
             new FormExpression(FormExpression.BOOL, "Not", "", [FormExpression.BOOL], function(params) {}),
             new FormExpression(FormExpression.BOOL, "And", "", [false, FormExpression.BOOL, FormExpression.REPEAT_NEXT, "&", FormExpression.BOOL], function(params) {}),
             new FormExpression(FormExpression.BOOL, "Or", "", [false, FormExpression.BOOL, FormExpression.REPEAT_NEXT, "or", FormExpression.BOOL], function(params) {}),
@@ -122,8 +137,8 @@ export const getFormExpressions = () => {
             new FormExpression(FormExpression.STR, "Robot DS #", "Robot driver station number", [], function(params) {}),
             new FormExpression(FormExpression.NUM, "Team name", "", [], function(params) {}),
             new FormExpression(FormExpression.STR, "Position", "", [], function(params) {}),
-            new FormExpression(FormExpression.STR, "", "", [], function(params) {}),
-            new FormExpression(FormExpression.STR, "", "", [], function(params) {}),
+            new FormExpression(FormExpression.NUM, "Match Number", "", [], function(params) {}),
+            new FormExpression(FormExpression.STR, "Scouter Name", "", [], function(params) {}),
         ],
         Actions: [
             new FormExpression(FormExpression.ACTION, "Change", "", [FormExpression.FIELD, "by", FormExpression.NUM], function(params) { return () => {} }),

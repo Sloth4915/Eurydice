@@ -1,20 +1,55 @@
 <template>
     <div class="f gap cy">
-        <label>{{ label }}</label>
+        <!--Label for overall expression type-->
+        <label v-if="label">{{ label }}</label>
+
+        <!--Display-->
         <div :title="value.name + ' - ' + value.description" class="f expression" :class="{'color': (nest % 2) === 0}">
-            <UIButton @click.stop="this.$refs.dialog.openPopup()">
-                <template v-if="value.showTitle">{{ value.name }}</template>
-                <template v-else>Change</template>
-            </UIButton>
-            <template v-for="elem in value.visualParams">
-                <template v-if="typeof elem === 'string'">
-                    <div class="f c">{{ elem }}</div>
+            <!--Values need special handling-->
+            <template v-if="type == 'value'">
+                <template v-if="value.name == 'NumValue'">
+                    <UIButton @click.stop="this.$refs.dialog.openPopup()">Num</UIButton>
+                    <div class="parameters f"><UIInput type="number" v-model="value.value"/></div>
                 </template>
-                <template v-else>
-                    <ExpressionEditor v-model="value.params[elem]" :restrictValuesTo="whatTypesAreAllowedForThisChildParameter(value.paramTypes[elem])" :nest="nest+1"/>
+                <template v-if="value.name == 'BoolValue'">
+                    <UIButton @click.stop="this.$refs.dialog.openPopup()">Bool</UIButton>
+                    <div class="parameters f"><UIInput type="checkbox" v-model="value.value"/></div>
+                </template>
+                <template v-if="value.name == 'StrValue'">
+                    <UIButton @click.stop="this.$refs.dialog.openPopup()">Str</UIButton>
+                    <div class="parameters f"><UIInput type="text" v-model="value.value"/></div>
+                </template>
+                <template v-if="value.name == 'TagsValue'">
+                    <UIButton @click.stop="this.$refs.dialog.openPopup()">Tags</UIButton>
+                    <div class="parameters f">
+                        <template v-for="(tag, index) of value.value">
+                            <UIInput class="small" v-model="value.value[index]"/>
+                            <UIButton class="small" @click="value.value.splice(index, 1)">🗑️</UIButton>
+                        </template>
+                        <UIButton class="small" @click="value.value.push('')">+</UIButton>
+                    </div>
                 </template>
             </template>
+            <!--Non-values-->
+            <template v-else>
+                <UIButton @click.stop="this.$refs.dialog.openPopup()">
+                    <template v-if="value.showTitle">{{ value.name }}</template>
+                    <template v-else>Change</template>
+                </UIButton>
+                <div class="parameters f gap f-wrap" v-if="value.visualParams.length">
+                    <template v-for="elem in value.visualParams">
+                        <template v-if="typeof elem === 'string'">
+                            <div class="f c">{{ elem }}</div>
+                        </template>
+                        <template v-else>
+                            <ExpressionEditor v-model="value.params[elem]" :restrictValuesTo="whatTypesAreAllowedForThisChildParameter(value.paramTypes[elem])" :nest="nest+1"/>
+                        </template>
+                    </template>
+                </div>
+            </template>
         </div>
+
+        <!--Popup to select expression-->
         <UIDialog closeable ref="dialog">
             <div class="popup row gap">
                 <div class="col">
@@ -28,10 +63,10 @@
                 </div>
                 <div class="popup-divider"></div>
                 <div class="col" v-show="popupPhase === 'values'">
-                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.NUM)">Number</UIButton>
-                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.BOOL)">Bool</UIButton>
-                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.STR)">String</UIButton>
-                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.TAGS)">Tags</UIButton>
+                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.NUM)" @click="value = new FormExpressionValue(FormExpression.NUM, 0)">Number</UIButton>
+                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.BOOL)" @click="value = new FormExpressionValue(FormExpression.BOOL, false)">Bool</UIButton>
+                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.STR)" @click="value = new FormExpressionValue(FormExpression.STR, '')">String</UIButton>
+                    <UIButton v-show="allowType(restrictValuesTo, FormExpression.TAGS)" @click="value = new FormExpressionValue(FormExpression.TAGS, [])">Tags</UIButton>
                 </div>
                 <div class="col" v-show="popupPhase === 'fields'">
                     TODO: Field Select (also figure out how is that going to be represented in code)
@@ -90,6 +125,8 @@
         data() {
             return {
                 popupPhase: "values",
+                // Value of an expression with type value
+                valueValue: ""
             }
         },
         computed: {
@@ -115,6 +152,11 @@
                     }
 
                     return exps
+                }
+            },
+            type: {
+                get() {
+                    return this.value.type
                 }
             }
         },
